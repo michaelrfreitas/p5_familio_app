@@ -17,7 +17,8 @@ if os.path.isfile("env.py"):
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+TEMPLATES_ALLAUTH = os.path.join(BASE_DIR, 'templates', 'allauth')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -65,7 +66,7 @@ ROOT_URLCONF = 'familio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR, TEMPLATES_ALLAUTH],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,6 +90,17 @@ AUTHENTICATION_BACKENDS = [
 WSGI_APPLICATION = 'familio.wsgi.application'
 
 SITE_ID = 1
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_FORMS = {'signup': 'member.forms.MyCustomSignupForm'}
+AUTH_USER_MODEL = 'member.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
