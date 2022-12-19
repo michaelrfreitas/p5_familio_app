@@ -54,6 +54,11 @@
     </form>
   {% endif %}
 
+  <div>
+    <a href="{% url 'delete_member' user.id %}"><button class="primaryAction" type="submit">Delete Account</button></a>
+  </div>
+
+
 {% endblock %}
 
 
