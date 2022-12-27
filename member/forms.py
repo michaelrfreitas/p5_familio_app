@@ -11,8 +11,8 @@ class MyCustomSignupForm(SignupForm):
         attrs={'placeholder': 'Last Name'}), required=True)
     phone = forms.CharField(max_length=20, label='Phone', widget=forms.TextInput(
         attrs={'placeholder': '+353 XX XXX XXXX'}), required=False)
-    dob = forms.DateField(label=('DOB'), widget=forms.DateInput(format=('%d/%m/%Y'), attrs={
-                          'class': 'form-control', 'type': 'date'}), required=True)
+    dob = forms.DateField(label=('DOB'), widget=forms.DateInput(
+        format=('%d/%m/%Y'), attrs={'type': 'date'}), required=True)
     photo = forms.ImageField(label='Photo', required=False)
 
     def save(self, request):
