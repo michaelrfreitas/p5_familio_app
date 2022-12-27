@@ -50,17 +50,17 @@
           {% include 'includes/main_nav.html' %}
         {% endif %}
       </nav>
-        <ul class="list-inline list-unstyled align-items-right my-0">
+        <ul class="list-inline list-unstyled align-items-right my-1">
             {% if request.user.is_authenticated %}
                 <li class="list-inline-item dropdown">
                     <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <div class="text-center">
                         <div><i class="fas fa-user fa-lg"></i></div>
-                        <p class="my-0">My Account</p>
+                        <p class="small my-1">My Account</p>
                     </div>
                     </a>
-                    <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                    <div class="dropdown-menu border-1" aria-labelledby="user-options">
                         <a href="" class="dropdown-item">My Profile</a>
                         <a href="{% url 'account_change_password' %}" class="dropdown-item">Change Password</a>
                         <a href="{% url 'account_email' %}" class="dropdown-item">Change Email</a>

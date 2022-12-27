@@ -4,21 +4,27 @@
 <div class="collapse navbar-collapse" id="main-nav">
     <ul class="navbar-nav w-100 justify-content-end mx-auto">
         <li class="nav-item">
-            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#">
-                Home
-            </a>
+            {% if request.resolver_match.url_name == 'home' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'home' %}">Home</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'home' %}">Home</a>
+            {% endif %}
         </li>
 
         <li class="nav-item">
-            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#">
-                Sign In
-            </a>
+            {% if request.resolver_match.url_name == 'account_login' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'account_login' %}">Sign In</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'account_login' %}">Sign In</a>
+            {% endif %}
         </li>
 
         <li class="nav-item">
-            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#">
-                Contact
-            </a>
+            {% if request.resolver_match.url_name == 'contact' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'contact' %}">Contact</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'contact' %}">Contact</a>
+            {% endif %}
         </li>
     </ul>
 </div>

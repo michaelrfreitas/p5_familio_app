@@ -67,6 +67,14 @@ body {
     color: #000 !important;
 }
 
+.text-active {
+    color: white !important;
+    border-radius: 4px;
+    background-color: black;
+    padding: 8px;
+    margin: 4px 2px;
+}
+
 .text-white {
     color: #fff !important;
 }
