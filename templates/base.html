@@ -44,8 +44,8 @@
 <body>
   <header class="container-fluid fixed-top">
     <div class="row bg-white pt-lg-2 d-flex flex-nowrap">
-      <nav class="navbar navbar-expand-lg navbar-light w-100">
-        <a class="navbar-brand logo-font" href="{%url 'home' %}"><h2><strong>Familio</strong></h2></a>
+      <nav class="navbar navbar-expand-lg navbar-light nav-width">
+        <a class="navbar-brand logo-font" href="{% url 'home' %}"><h2><strong>Familio</strong></h2></a>
         {% if not request.user.is_authenticated %}
           {% include 'includes/main_nav.html' %}
         {% endif %}
@@ -56,8 +56,14 @@
                     <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <div class="text-center">
-                        <div><i class="fas fa-user fa-lg"></i></div>
-                        <p class="small my-1">My Account</p>
+                        <div>
+                          {% if user.photo %}
+                          <img id="photo_sm" src="{{ user.photo.url }}" alt="">
+                          {% else %}
+                          <i class="fas fa-user fa-lg"></i>
+                          {% endif %}
+                        </div>
+                        <p class="small my-1">{{ user.get_full_name }}</p>
                     </div>
                     </a>
                     <div class="dropdown-menu border-1" aria-labelledby="user-options">

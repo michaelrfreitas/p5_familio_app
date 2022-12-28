@@ -188,6 +188,17 @@ a.category-badge>span.badge:hover {
     width:100%;
 }
 
+#photo_sm {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.nav-width {
+    width: 90%;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */
