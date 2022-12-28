@@ -1,6 +1,6 @@
 from allauth.account.forms import SignupForm
 from django import forms
-from .models import CustomUser
+from . import models
 
 
 class MyCustomSignupForm(SignupForm):
@@ -24,3 +24,17 @@ class MyCustomSignupForm(SignupForm):
         user.photo = self.cleaned_data['photo']
         user.save()
         return user
+
+
+class MyFamilioForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Familio
+        fields = ['email', 'level', 'kinship']
+
+
+class MyGroupForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Group
+        fields = ['grp_name', 'familio']
