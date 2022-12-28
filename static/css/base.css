@@ -30,8 +30,27 @@ body {
     min-width: 260px;
 }
 
+.menu-button {
+    background: black;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-grid;
+    font-size: large;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 16px 16px;
+    width: 33%;
+}
+
+
 .footer_i {
     font-size:48px;
+}
+
+.menu_i {
+    font-size:400%;
 }
 
 .btn-black {
@@ -61,6 +80,14 @@ body {
 .btn-black:focus {
     background: #222;
     color: white;
+}
+
+.menu-button:hover,
+.menu-button:active,
+.menu-button:focus {
+    background: white;
+    color: black;
+    text-decoration: none;
 }
 
 .text-black {
