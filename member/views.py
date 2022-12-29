@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
 from django.contrib import messages
+from django.core.mail import EmailMessage
 
 
 @login_required(redirect_field_name='account_login')
@@ -27,6 +28,23 @@ def familio(request):
             element = form.save(commit=False)
             element.member = request.user
             element.save()
+            print(request.user.first_name)
+            # Render the HTML template
+            html_mail = render(request, 'emails/email_invite.html', {
+                'member_name': request.user.first_name,
+                'kinship': element.kinship,
+                'familio_id': element.id})
+            # Create the email message
+            msg = EmailMessage(
+                subject='Familio Invite',
+                body=html_mail,
+                from_email='familio.uk@gmail.com',
+                to=[element.email],
+            )
+            msg.content_subtype = "html"
+            # Send the email
+            msg.send()
+            messages.info(request, 'Invite sent!')
             return redirect('menu')
         else:
             messages.warning(request, 'This invite is already sent.')
@@ -35,3 +53,5 @@ def familio(request):
         'form': form
     }
     return render(request, 'member/familio.html', context)
+
+

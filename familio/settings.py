@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.core.mail',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -171,3 +172,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Send email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_SERVER')
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv('USER_EMAIL')
+EMAIL_HOST_PASSWORD = os.getenv('USER_PASSWORD')
+EMAIL_USE_TLS = True
