@@ -4,9 +4,7 @@ from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
 from django.contrib import messages
-from django.core import mail
-
-connection = mail.get_connection()
+from django.core.mail import send_mail
 
 
 @login_required(redirect_field_name='account_login')
@@ -43,21 +41,21 @@ def familio(request):
             element.member = request.user
             element.save()
             # Render the HTML template
-            html_content = render(request, 'emails/email_invite.html', {
-                'member_name': request.user.first_name,
-                'kinship': element.kinship,
-                'familio_id': element.id})
+            # html_content = render(request, 'emails/email_invite.txt', {
+            #     'member_name': request.user.first_name,
+            #     'kinship': element.kinship,
+            #     'familio_id': element.id})
             # Create the email message
-            connection.open()
             subject, from_email, to = 'Familio Invite', 'familio.uk@gmail.com', element.email
             text_content = f'Join your family member { request.user.first_name } that have invited you with a kinship that you are { element.kinship }.'
-            msg = mail.EmailMultiAlternatives(
-                subject, text_content, from_email, [to], connection=connection,)
-            msg.attach_alternative(html_content, "text/html")
-            # Send the email
-            connection.send_messages([msg])
+            send_mail(
+                subject,
+                text_content,
+                from_email,
+                [to],
+                fail_silently=False,
+            )
             messages.info(request, 'Invite sent!')
-            connection.close()
             return redirect('menu')
         else:
             messages.warning(request, 'This invite is already sent.')
