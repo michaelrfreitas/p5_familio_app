@@ -15,6 +15,18 @@ def delete_member(request, user_id):
 
 
 @login_required(redirect_field_name='account_login')
+def tree(request):
+    """ A view to return the tree page """
+    return render(request, 'member/tree.html')
+
+
+@login_required(redirect_field_name='account_login')
+def group(request):
+    """ A view to return the menu page """
+    return render(request, 'member/group.html')
+
+
+@login_required(redirect_field_name='account_login')
 def menu(request):
     """ A view to return the menu page """
     return render(request, 'member/menu.html')
@@ -53,5 +65,3 @@ def familio(request):
         'form': form
     }
     return render(request, 'member/familio.html', context)
-
-
