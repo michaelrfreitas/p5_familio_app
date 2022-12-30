@@ -46,18 +46,15 @@ def familio(request):
                 'kinship': element.kinship,
                 'familio_id': element.id})
             # Create the email message
-            try:
-                msg = EmailMessage(
-                    subject='Familio Invite',
-                    body=html_mail,
-                    to=[element.email],
-                )
-                msg.content_subtype = "html"
-                # Send the email
-                msg.send()
-                messages.info(request, 'Invite sent!')
-            except Exception as e:
-                print(e)
+            msg = EmailMessage(
+                subject='Familio Invite',
+                body=html_mail,
+                to=[element.email],
+            )
+            msg.content_subtype = "html"
+            # Send the email
+            msg.send()
+            messages.info(request, 'Invite sent!')
             return redirect('menu')
         else:
             messages.warning(request, 'This invite is already sent.')
