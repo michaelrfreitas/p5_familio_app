@@ -55,7 +55,7 @@ def familio(request):
                 subject, text_content, from_email, [to], connection=connection,)
             msg.attach_alternative(html_content, "text/html")
             # Send the email
-            msg.send()
+            connection.send_messages([msg])
             messages.info(request, 'Invite sent!')
             connection.close()
             return redirect('menu')
