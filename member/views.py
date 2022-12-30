@@ -40,23 +40,24 @@ def familio(request):
             element = form.save(commit=False)
             element.member = request.user
             element.save()
-            print(request.user.first_name)
             # Render the HTML template
             html_mail = render(request, 'emails/email_invite.html', {
                 'member_name': request.user.first_name,
                 'kinship': element.kinship,
                 'familio_id': element.id})
             # Create the email message
-            msg = EmailMessage(
-                subject='Familio Invite',
-                body=html_mail,
-                from_email='familio.uk@gmail.com',
-                to=[element.email],
-            )
-            msg.content_subtype = "html"
-            # Send the email
-            msg.send()
-            messages.info(request, 'Invite sent!')
+            try:
+                msg = EmailMessage(
+                    subject='Familio Invite',
+                    body=html_mail,
+                    to=[element.email],
+                )
+                msg.content_subtype = "html"
+                # Send the email
+                msg.send()
+                messages.info(request, 'Invite sent!')
+            except Exception as e:
+                print(e)
             return redirect('menu')
         else:
             messages.warning(request, 'This invite is already sent.')
