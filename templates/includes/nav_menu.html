@@ -4,7 +4,7 @@
 <div class="collapse navbar-collapse" id="nav-menu">
     <ul class="navbar-nav w-100 justify-content-end mx-auto">
         <li class="nav-item">
-            {% if request.resolver_match.url_name == 'Tree' %}
+            {% if request.resolver_match.url_name == 'tree' %}
             <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'tree' %}">Tree</a>
             {% else %}
             <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'tree' %}">Tree</a>

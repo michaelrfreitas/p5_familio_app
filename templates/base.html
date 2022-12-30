@@ -47,7 +47,13 @@
         {% if not request.user.is_authenticated %}
           {% include 'includes/main_nav.html' %}
         {% else %}
+          {% if not request.resolver_match.url_name == 'menu' %}
+            <ul class="navbar-nav w-100 justify-content-start mx-auto">
+              <li class="nav-item">
+                <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'menu' %}">Menu</a>
+          </li>
           {% include 'includes/nav_menu.html' %}
+          {% endif %}
         {% endif %}
       </nav>
         <ul class="list-inline list-unstyled align-items-right my-1">
