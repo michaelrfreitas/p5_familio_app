@@ -46,6 +46,8 @@
         <a class="navbar-brand logo-font" href="{% url 'home' %}"><h2><strong>Familio</strong></h2></a>
         {% if not request.user.is_authenticated %}
           {% include 'includes/main_nav.html' %}
+        {% else %}
+          {% include 'includes/nav_menu.html' %}
         {% endif %}
       </nav>
         <ul class="list-inline list-unstyled align-items-right my-1">

@@ -1,0 +1,55 @@
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-menu">
+    <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="nav-menu">
+    <ul class="navbar-nav w-100 justify-content-end mx-auto">
+        <li class="nav-item">
+            {% if request.resolver_match.url_name == 'Tree' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'tree' %}">Tree</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'tree' %}">Tree</a>
+            {% endif %}
+        </li>
+
+        <li class="nav-item">
+            {% if request.resolver_match.url_name == 'blog' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'blog' %}">Blog</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'blog' %}">Blog</a>
+            {% endif %}
+        </li>
+
+        <li class="nav-item">
+            {% if request.resolver_match.url_name == 'pictures' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'pictures' %}">Pictures</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'pictures' %}">Pictures</a>
+            {% endif %}
+        </li>
+
+        <li class="nav-item">
+            {% if request.resolver_match.url_name == 'group' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'group' %}">Group</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'group' %}">Group</a>
+            {% endif %}
+        </li>
+
+        <li class="nav-item">
+            {% if request.resolver_match.url_name == 'familio' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'familio' %}">Members</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'familio' %}">Members</a>
+            {% endif %}
+        </li>
+
+        <li class="nav-item">
+            {% if request.resolver_match.url_name == 'plans' %}
+            <a class="logo-font font-weight-bold nav-link text-active mr-4" href="{% url 'plans' %}">Plans</a>
+            {% else %}
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'plans' %}">Plans</a>
+            {% endif %}
+        </li>
+    </ul>
+</div>
+
