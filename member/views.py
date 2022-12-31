@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
 from django.contrib import messages
-from django.core.mail import EmailMessage
+from django.core.mail import send_mail
 
 
 @login_required(redirect_field_name='account_login')
@@ -40,19 +40,18 @@ def familio(request):
             element = form.save(commit=False)
             element.member = request.user
             element.save()
-            # Render the HTML template
-            html_content = render(request, 'emails/email_invite.html', {
-                'member_name': request.user.first_name,
-                'kinship': element.kinship,
-                'familio_id': element.id})
             # Create the email message
             subject, from_email, to = 'Familio Invite', 'familio.uk@gmail.com', element.email
-            text_content = f'Join your family member { request.user.first_name } that have invited you with a kinship that you are { element.kinship }.'
-            msg = EmailMessage(subject, html_content, from_email, [to])
-            msg.content_subtype = "html"  # Main content is now text/html
-            msg.send()
+            text_content = f"Hello, We are Familio and we have a invite to you.\n\nJoin your family member { request.user.first_name } { request.user.last_name } that has invited you as a family to be part of Familio.\n\nThis tool will help you to be close to your family.\n\nDo you want to accept Michael Freitas's invitation?\n\nClick or copy the link in the browser.\n\nhttps://familio.uk/members/approved/{ element.id }\n\nMany thanks!\nRegards!"
+            send_mail(
+                subject,
+                text_content,
+                from_email,
+                [to],
+                fail_silently=False,
+            )
             messages.success(request, 'The invite was sent successfully!')
-            return redirect('menu')
+            return redirect('familio')
         else:
             messages.warning(request, 'This invite could not be sent.')
     form = forms.MyFamilioForm()

@@ -185,7 +185,10 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Send email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+if development:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_SERVER')
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('USER_EMAIL')
