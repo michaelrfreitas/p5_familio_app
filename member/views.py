@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 
 @login_required(redirect_field_name='account_login')
@@ -41,24 +41,20 @@ def familio(request):
             element.member = request.user
             element.save()
             # Render the HTML template
-            # html_content = render(request, 'emails/email_invite.txt', {
-            #     'member_name': request.user.first_name,
-            #     'kinship': element.kinship,
-            #     'familio_id': element.id})
+            html_content = render(request, 'emails/email_invite.html', {
+                'member_name': request.user.first_name,
+                'kinship': element.kinship,
+                'familio_id': element.id})
             # Create the email message
             subject, from_email, to = 'Familio Invite', 'familio.uk@gmail.com', element.email
             text_content = f'Join your family member { request.user.first_name } that have invited you with a kinship that you are { element.kinship }.'
-            send_mail(
-                subject,
-                text_content,
-                from_email,
-                [to],
-                fail_silently=False,
-            )
-            messages.info(request, 'Invite sent!')
+            msg = EmailMessage(subject, html_content, from_email, [to])
+            msg.content_subtype = "html"  # Main content is now text/html
+            msg.send()
+            messages.success(request, 'The invite was sent successfully!')
             return redirect('menu')
         else:
-            messages.warning(request, 'This invite is already sent.')
+            messages.warning(request, 'This invite could not be sent.')
     form = forms.MyFamilioForm()
     context = {
         'form': form
