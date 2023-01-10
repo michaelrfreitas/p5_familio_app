@@ -46,11 +46,11 @@ body {
 
 
 .footer_i {
-    font-size:48px;
+    font-size: 48px;
 }
 
 .menu_i {
-    font-size:400%;
+    font-size: 400%;
 }
 
 .btn-black {
@@ -185,7 +185,7 @@ a.category-badge>span.badge:hover {
     height: 15%;
     left: 0;
     position: fixed;
-    width:100%;
+    width: 100%;
 }
 
 #photo_sm {
