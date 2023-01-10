@@ -37,7 +37,7 @@ class CustomUser(AbstractUser):
     phone = models.CharField(max_length=20, blank=True, null=True)
     dob = models.DateField(null=True)
     photo = models.ImageField(
-        upload_to='media/', blank=True, null=True, default="")
+        upload_to='static/media/', blank=True, null=True, default="")
     subscription = models.BooleanField(default=False)
 
 
