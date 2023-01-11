@@ -7,4 +7,5 @@ urlpatterns = [
     path('familio', views.familio, name='familio'),
     path('tree', views.tree, name='tree'),
     path('group', views.group, name='group'),
+    path('approved/<familio_id>', views.approved, name='approved'),
 ]

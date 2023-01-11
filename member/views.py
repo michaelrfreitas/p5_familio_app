@@ -34,6 +34,10 @@ def menu(request):
 
 @login_required(redirect_field_name='account_login')
 def familio(request):
+    """ 
+    Member send a invite to a probably family member, 
+    that didn't be part of their family yet. 
+    """
     if request.method == 'POST':
         form = forms.MyFamilioForm(request.POST)
         if form.is_valid():
@@ -42,7 +46,16 @@ def familio(request):
             element.save()
             # Create the email message
             subject, from_email, to = 'Familio Invite', 'familio.uk@gmail.com', element.email
-            text_content = f"Hello, We are Familio and we have a invite to you.\n\nJoin your family member { request.user.first_name } { request.user.last_name } that has invited you as a family to be part of Familio.\n\nThis tool will help you to be close to your family.\n\nDo you want to accept Michael Freitas's invitation?\n\nClick or copy the link in the browser.\n\nhttps://familio.uk/members/approved/{ element.id }\n\nMany thanks!\nRegards!"
+            text_content = (
+                f"Hello, We are Familio and we have a invite to you.\n\n"
+                f"Join your family member { request.user.first_name } { request.user.last_name } "
+                f"that has invited you as a family to be part of Familio.\n\n"
+                f"This tool will help you to be close to your family.\n\n"
+                f"Do you want to accept Michael Freitas's invitation?\n\n"
+                f"Click or copy the link in the browser.\n\n"
+                f"https://familio.uk/members/approved/{ element.id }\n\n"
+                f"Many thanks!\nRegards!"
+            )
             send_mail(
                 subject,
                 text_content,
@@ -59,3 +72,12 @@ def familio(request):
         'form': form
     }
     return render(request, 'member/familio.html', context)
+
+
+@login_required(redirect_field_name='account_login')
+def approved(request, familio_id):
+    """ Member approves to Familio member. """
+    approve = get_object_or_404(models.Familio, id=familio_id)
+    approve.approved = not approve.approved
+    approve.save()
+    return redirect('menu')
