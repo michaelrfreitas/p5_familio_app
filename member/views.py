@@ -45,7 +45,7 @@ def familio(request):
             element.member = request.user
             element.save()
             # Create the email message
-            subject, from_email, to = 'Familio Invite', 'familio.uk@gmail.com', element.email
+            subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email
             text_content = (
                 f"Hello, We are Familio and we have a invite to you.\n\n"
                 f"Join your family member { request.user.first_name } { request.user.last_name } "
@@ -53,7 +53,7 @@ def familio(request):
                 f"This tool will help you to be close to your family.\n\n"
                 f"Do you want to accept Michael Freitas's invitation?\n\n"
                 f"Click or copy the link in the browser.\n\n"
-                f"https://familio.uk/members/approved/{ element.id }\n\n"
+                f"{ request.activate_url}/members/approved/{ element.id }\n\n"
                 f"Many thanks!\nRegards!"
             )
             send_mail(
@@ -68,8 +68,12 @@ def familio(request):
         else:
             messages.warning(request, 'This invite could not be sent.')
     form = forms.MyFamilioForm()
+    familios = models.Familio.objects.filter(member=request.user)
+    receives = models.Familio.objects.filter(email=request.user.email)
     context = {
-        'form': form
+        'form': form,
+        'familios': familios,
+        'receives': receives
     }
     return render(request, 'member/familio.html', context)
 
@@ -80,4 +84,5 @@ def approved(request, familio_id):
     approve = get_object_or_404(models.Familio, id=familio_id)
     approve.approved = not approve.approved
     approve.save()
-    return redirect('menu')
+    messages.success(request, 'The invite was been approved!')
+    return redirect('familio')

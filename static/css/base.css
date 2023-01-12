@@ -230,7 +230,7 @@ a.category-badge>span.badge:hover {
     }
 
     body {
-        height: calc(100vh - 116px);
+        height: 120%;
     }
 
     #footer {
