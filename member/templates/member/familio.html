@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="container py-5 h-100">
-    <div class="row d-flex align-content-center h-100 pt-5">
+    <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div class="card bg-light text-black" style="border-radius: 1rem;">
+            <div class="card bg-light text-black fam_sha">
                 <div class="card-body text-center">
                     <h1 class="fw-bold mb-2 text-uppercase">{% trans "Familio Invite" %}</h1>
-                    <div class="form-outline form-white mb-4">
+                    <div class="form-outline form-white mb-2">
                         <form method="POST" action="{% url 'familio' %}">
                             {% csrf_token %}
                             {{ form.as_p }}
@@ -26,15 +26,14 @@
             </div>
         </div>
         {% if familios or receives %}
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div class="card bg-white text-black" style="border-radius: 1rem;">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5 fam_over">
+            <div class="card bg-white text-black fam_sha">
                 <div class="card-body">
                     {% if familios %}
-                    <div class="mb-md-5 mt-md-4">
+                    <div class="mb-md-3 mt-md-2">
                         <h2 class="fw-bold mb-2 text-uppercase">{% trans "Familio Sent" %}</h2>
                         {% for familio in familios %}
-                        <div class="form-outline form-white mb-4"
-                            style="border: 1px solid;padding: 10px;box-shadow: 5px 10px #888888;border-radius: 1rem;">
+                        <div class="form-outline form-white mb-2 fam_sha">
                             <p>
                                 Email: {{ familio.email }}<br>
                                 Kinship: {{ familio.kinship }}<br>
@@ -45,18 +44,20 @@
                         </div>
                         {% endfor %}
                     </div>
-                    <hr>
-                    {% endif %}
+                </div>
+                <hr>
+                {% endif %}
+                <div class="card-body">
                     {% if receives %}
-                    <div class="mb-md-5 mt-md-4">
+                    <div class="mb-md-3 mt-md-2">
                         <h2 class="fw-bold mb-2 text-uppercase">{% trans "Familio Received" %}</h2>
                         {% for receive in receives %}
-                        <div class="form-outline form-white mb-4"
-                            style="border: 1px solid;padding: 10px;box-shadow: 5px 10px #888888;border-radius: 1rem;">
+                        <div class="form-outline form-white mb-2 fam_sha">
                             <p>
                                 Member: {{ receive.member.get_full_name }}<br>
                                 Kinship: {{ receive.kinship }}<br>
-                                Status: {% if receive.approved %} Approved {% else %} Pending   <a class="btn btn-outline-dark btn-sm"
+                                Status: {% if receive.approved %} Approved {% else %} Pending <a
+                                    class="btn btn-outline-dark btn-sm"
                                     href="{{ activate_url }}/members/approved/{{ receive.id }}">Approve</a>{% endif %}
                             </p>
                         </div>
@@ -68,4 +69,5 @@
         </div>
         {% endif %}
     </div>
-    {% endblock %}
+</div>
+{% endblock %}

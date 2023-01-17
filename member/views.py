@@ -53,7 +53,7 @@ def familio(request):
                 f"This tool will help you to be close to your family.\n\n"
                 f"Do you want to accept Michael Freitas's invitation?\n\n"
                 f"Click or copy the link in the browser.\n\n"
-                f"{ request.activate_url}/members/approved/{ element.id }\n\n"
+                f"{ request.scheme }://{request.META['HTTP_HOST'] }/members/approved/{ element.id }\n\n"
                 f"Many thanks!\nRegards!"
             )
             send_mail(

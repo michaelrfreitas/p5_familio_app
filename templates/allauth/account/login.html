@@ -7,12 +7,12 @@
 
 {% block content %}
 
-<div class="container py-5 h-100">
-  <div class="row d-flex justify-content-center align-items-center h-100">
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center pt-5">
     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-      <div class="card bg-light text-black" style="border-radius: 1rem;">
-        <div class="card-body p-5 text-center">
-          <h1 class="fw-bold text-uppercase mb-2">{% trans "Sign In" %}</h1>
+      <div class="card bg-light text-black fam_sha">
+        <div class="card-body text-center">
+          <h2 class="fw-bold text-uppercase mb-1">{% trans "Sign In" %}</h2>
 
           {% get_providers as socialaccount_providers %}
 
@@ -21,7 +21,7 @@
           <div class="socialaccount_ballot mb-2">
 
             <a href="{% provider_login_url 'google' %}">
-              <i class="fa-brands fa-google footer_i mb-2"></i>
+              <i class="fa-brands fa-google footer_i mb-1"></i>
             </a>
 
             <div class="login-or">{% trans 'OR' %}</div>
@@ -32,7 +32,7 @@
 
           {% endif %}
 
-          <div class="form-outline form-white mb-2">
+          <div class="form-outline form-white mb-1">
             <form class="login" method="POST" action="{% url 'account_login' %}">
               {% csrf_token %}
               {{ form.as_p }}
@@ -40,7 +40,7 @@
               <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
               {% endif %}
 
-              <p class="pb-lg-2"><a class="button secondaryAction text-black"
+              <p class="pb-lg-1"><a class="button secondaryAction text-black"
                   href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a></p>
 
               <button class="primaryAction btn btn btn-outline-dark btn-lg" type="submit">{% trans "Sign In" %}</button>
@@ -48,7 +48,7 @@
             </form>
           </div>
 
-          <p class="text-black">{% blocktrans %}If you have not created an account yet, then please do it first.
+          <p class="text-black">{% blocktrans %}If you have not created an account yet.
             {% endblocktrans %}
           </p>
           <a href="{{ signup_url }}" class="primaryAction btn btn btn-outline-dark btn-lg">Sign Up</a>

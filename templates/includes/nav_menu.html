@@ -2,6 +2,13 @@
     <span class="navbar-toggler-icon"></span>
 </button>
 <div class="collapse navbar-collapse" id="nav-menu">
+    {% if not request.resolver_match.url_name == 'menu' %}
+    <ul class="navbar-nav w-100 justify-content-start mx-auto">
+        <li class="nav-item">
+            <a class="logo-font font-weight-bold nav-link text-black mr-4" href="{% url 'menu' %}">Menu</a>
+        </li>
+    </ul>
+    {% endif %}
     <ul class="navbar-nav w-100 justify-content-end mx-auto">
         <li class="nav-item">
             {% if request.resolver_match.url_name == 'tree' %}
