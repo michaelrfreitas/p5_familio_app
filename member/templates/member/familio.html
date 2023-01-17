@@ -56,8 +56,10 @@
                             <p>
                                 Member: {{ receive.member.get_full_name }}<br>
                                 Kinship: {{ receive.kinship }}<br>
-                                Status: {% if receive.approved %} Approved {% else %} Pending <a
-                                    class="btn btn-outline-dark btn-sm"
+                                Status: {% if receive.approved %} Approved <a
+                                class="btn btn-outline-danger btn-md"
+                                href="{{ activate_url }}/members/approved/{{ receive.id }}">Disapprove</a> {% else %} Pending <a
+                                    class="btn btn-outline-success btn-md"
                                     href="{{ activate_url }}/members/approved/{{ receive.id }}">Approve</a>{% endif %}
                             </p>
                         </div>

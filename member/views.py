@@ -90,5 +90,5 @@ def approved(request, familio_id):
     approve = get_object_or_404(models.Familio, id=familio_id)
     approve.approved = not approve.approved
     approve.save()
-    messages.success(request, 'The invite was been approved!')
+    messages.info(request, f'The status has changed to Invite member: { approve.member.first_name } { approve.member.last_name } your Kinship: { approve.kinship}!')
     return redirect('familio')
