@@ -42,29 +42,35 @@ def familio(request):
         form = forms.MyFamilioForm(request.POST)
         if form.is_valid():
             element = form.save(commit=False)
-            element.member = request.user
-            element.save()
-            # Create the email message
-            subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email
-            text_content = (
-                f"Hello, We are Familio and we have a invite to you.\n\n"
-                f"Join your family member { request.user.first_name } { request.user.last_name } "
-                f"that has invited you as a family to be part of Familio.\n\n"
-                f"This tool will help you to be close to your family.\n\n"
-                f"Do you want to accept Michael Freitas's invitation?\n\n"
-                f"Click or copy the link in the browser.\n\n"
-                f"{ request.scheme }://{request.META['HTTP_HOST'] }/members/approved/{ element.id }\n\n"
-                f"Many thanks!\nRegards!"
-            )
-            send_mail(
-                subject,
-                text_content,
-                from_email,
-                [to],
-                fail_silently=False,
-            )
-            messages.success(request, 'The invite was sent successfully!')
-            return redirect('familio')
+            if models.Familio.objects.filter(email=element.email, member=request.user):
+                messages.warning(
+                    request, 'You have already invited this email address. See in list Familio Sent.')
+                return redirect('familio')
+            else:
+                element.member = request.user
+                element.save()
+                # Create the email message
+                subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email
+                text_content = (
+                    f"Hello, We are Familio and we have a invite to you.\n\n"
+                    f"Join your family member { request.user.first_name } { request.user.last_name } "
+                    f"that has invited you as a family to be part of Familio.\n\n"
+                    f"This tool will help you to be close to your family.\n\n"
+                    f"Do you want to accept Michael Freitas's invitation?\n\n"
+                    f"Click or copy the link in the browser.\n\n"
+                    f"{ request.scheme }://{request.META['HTTP_HOST'] }/members/approved/{ element.id }\n\n"
+                    f"Many thanks!\nRegards!"
+                )
+                send_mail(
+                    subject,
+                    text_content,
+                    from_email,
+                    [to],
+                    fail_silently=False,
+                )
+                messages.success(
+                    request, 'The invite was sent successfully!')
+                return redirect('familio')
         else:
             messages.warning(request, 'This invite could not be sent.')
     form = forms.MyFamilioForm()
