@@ -8,11 +8,11 @@
 
 {% block content %}
 <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div class="card bg-light text-black" style="border-radius: 1rem;">
+            <div class="card bg-light text-black fam_sha">
                 <div class="card-body p-5 text-center">
-                    <h1 class="fw-bold text-uppercase mb-2">{% trans "Confirm E-mail Address" %}</h1>
+                    <h2 class="fw-bold text-uppercase mb-2">{% trans "Confirm E-mail Address" %}</h2>
 
                     {% if confirmation %}
 
@@ -24,7 +24,7 @@
 
                     <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
                         {% csrf_token %}
-                        <button type="submit">{% trans 'Confirm' %}</button>
+                        <button class="primaryAction btn btn btn-outline-dark btn-md" type="submit">{% trans 'Confirm' %}</button>
                     </form>
 
                     {% else %}
