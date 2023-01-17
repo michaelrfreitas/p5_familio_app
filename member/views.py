@@ -86,9 +86,40 @@ def familio(request):
 
 @login_required(redirect_field_name='account_login')
 def approved(request, familio_id):
-    """ Member approves to Familio member. """
+    """ Member approves and desapproves to Familio member. """
     approve = get_object_or_404(models.Familio, id=familio_id)
     approve.approved = not approve.approved
     approve.save()
-    messages.info(request, f'The status has changed to Invite member: { approve.member.first_name } { approve.member.last_name } your Kinship: { approve.kinship}!')
+    messages.info(
+        request, f'The status has changed to Invite member: { approve.member.first_name } { approve.member.last_name } your Kinship: { approve.kinship}!')
+    return redirect('familio')
+
+
+@login_required(redirect_field_name='account_login')
+def edit_invite(request, familio_id):
+    """ Member edit the Familio member invites """
+    invite = get_object_or_404(models.Familio, id=familio_id)
+    if request.method == 'POST':
+        form = forms.MyFamilioForm(request.POST, instance=invite)
+        if form.is_valid():
+            form.save()
+            return redirect('familio')
+        else:
+            messages.warning(request, 'This invite could not be updated.')
+    form = forms.MyFamilioForm(instance=invite)
+    familios = models.Familio.objects.filter(member=request.user)
+    receives = models.Familio.objects.filter(email=request.user.email)
+    context = {
+        'form': form,
+        'familios': familios,
+        'receives': receives
+    }
+    return render(request, 'member/familio.html', context)
+
+
+@login_required(redirect_field_name='account_login')
+def delete_invite(request, familio_id):
+    """  Member delete the Familio member invites """
+    invite = get_object_or_404(models.Familio, id=familio_id)
+    invite.delete()
     return redirect('familio')

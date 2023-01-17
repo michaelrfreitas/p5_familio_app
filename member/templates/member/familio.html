@@ -10,15 +10,19 @@
                 <div class="card-body text-center">
                     <h1 class="fw-bold mb-2 text-uppercase">{% trans "Familio Invite" %}</h1>
                     <div class="form-outline form-white mb-2">
-                        <form method="POST" action="{% url 'familio' %}">
+                        <form method="POST">
                             {% csrf_token %}
                             {{ form.as_p }}
                             {% if redirect_field_value %}
                             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                             {% endif %}
+                            {% if request.resolver_match.url_name == 'familio' %}
                             <button class="primaryAction btn btn btn-outline-dark btn-md"
                                 type="submit">{% trans 'Send'%}</button>
-
+                            {% else %}
+                            <button class="primaryAction btn btn btn-outline-dark btn-md"
+                                type="submit">{% trans 'Update'%}</button>
+                            {% endif %}
                         </form>
                     </div>
 
@@ -33,12 +37,16 @@
                     <div class="mb-md-3 mt-md-2">
                         <h2 class="fw-bold mb-2 text-uppercase">{% trans "Familio Sent" %}</h2>
                         {% for familio in familios %}
-                        <div class="form-outline form-white mb-2 fam_sha">
+                        <div class="form-outline form-white m-3 fam_sha">
                             <p>
                                 Email: {{ familio.email }}<br>
                                 Kinship: {{ familio.kinship }}<br>
                                 Level: {{ familio.level }}<br>
-                                Status: {% if familio.approved %} Approved {% else %} Pending {% endif %}
+                                Status: {% if familio.approved %} Approved {% else %} Pending {% endif %} <br>
+                                <a class="btn btn-outline-warning btn-md"
+                                    href="{{ activate_url }}/members/edit_invite/{{ familio.id }}">Edit</a> 
+                                <a class="btn btn-outline-danger btn-md"
+                                    href="{{ activate_url }}/members/delete_invite/{{ familio.id }}">Delete</a>
                             </p>
 
                         </div>
@@ -52,14 +60,13 @@
                     <div class="mb-md-3 mt-md-2">
                         <h2 class="fw-bold mb-2 text-uppercase">{% trans "Familio Received" %}</h2>
                         {% for receive in receives %}
-                        <div class="form-outline form-white mb-2 fam_sha">
+                        <div class="form-outline form-white m-3 fam_sha">
                             <p>
                                 Member: {{ receive.member.get_full_name }}<br>
                                 Kinship: {{ receive.kinship }}<br>
-                                Status: {% if receive.approved %} Approved <a
-                                class="btn btn-outline-danger btn-md"
-                                href="{{ activate_url }}/members/approved/{{ receive.id }}">Disapprove</a> {% else %} Pending <a
-                                    class="btn btn-outline-success btn-md"
+                                Status: {% if receive.approved %} Approved <br> <a class="btn btn-outline-danger btn-md"
+                                    href="{{ activate_url }}/members/approved/{{ receive.id }}">Disapprove</a>
+                                {% else %} Pending <br> <a class="btn btn-outline-success btn-md"
                                     href="{{ activate_url }}/members/approved/{{ receive.id }}">Approve</a>{% endif %}
                             </p>
                         </div>
