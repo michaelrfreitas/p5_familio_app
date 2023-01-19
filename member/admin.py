@@ -17,6 +17,10 @@ class FamilioAdmin (admin.ModelAdmin):
                     'member', 'approved', 'created_on')
     list_filter = ('kinship', 'level', 'approved', 'created_on')
     search_fields = ('email', 'member', 'kinship')
+    actions = ['approve_familio']
+
+    def approve_familio(self, request, queryset):
+        queryset.update(approved=True)
 
 
 @admin.register(models.Group)

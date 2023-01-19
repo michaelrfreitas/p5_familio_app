@@ -217,6 +217,32 @@ a.category-badge>span.badge:hover {
     height: 80%;
 }
 
+#tree {
+    width: 100%;
+    height: 100%;
+}
+
+.field_1 {
+    text-transform: uppercase;
+}
+
+[data-n-id] rect {
+    fill: #750000;
+}
+
+[data-l-id] path {
+    stroke: #750000;
+    stroke-width: 3;
+}
+
+[data-ctrl-n-menu-id] rect:hover~circle {
+    fill: white;
+}
+
+[data-id='search'] {
+    display: block !important;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */

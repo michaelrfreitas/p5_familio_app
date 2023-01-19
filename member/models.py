@@ -30,6 +30,8 @@ KINSHIP = (
     ('Sister-in-law', 'Sister-in-law'),
     ('Mother-in-law', 'Mother-in-law'),
     ('Father-in-law', 'Father-in-law'),
+    ('Son', 'Son'),
+    ('Daughter', 'Daughter'),
 )
 
 
