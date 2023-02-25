@@ -31,6 +31,9 @@ DEBUG = development
 
 ALLOWED_HOSTS = [os.getenv('HEROKU_HOSTNAME'), 'localhost']
 
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_PRICE_ID = os.getenv('STRIPE_PRICE_ID')
 
 # Application definition
 

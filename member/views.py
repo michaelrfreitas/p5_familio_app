@@ -129,31 +129,29 @@ def menu(request):
 
 @login_required(redirect_field_name='account_login')
 def familio(request):
-    """ 
-    Member send a invite to a probably family member, 
-    that didn't be part of their family yet. 
-    """
+    """ Member send a invite to a probably family member
+    that didn't be part of their family yet. """
     if request.method == 'POST':
         form = forms.MyFamilioForm(request.POST)
         if form.is_valid():
             element = form.save(commit=False)
-            if models.Familio.objects.filter(email=element.email, member=request.user):
+            if models.Familio.objects.filter(email=element.email, member=request.user):  # noqa
                 messages.warning(
-                    request, 'You have already invited this email address. See in list Familio Sent.')
+                    request, 'You have already invited this email address. See in list Familio Sent.')  # noqa
                 return redirect('familio')
             else:
                 element.member = request.user
                 element.save()
                 # Create the email message
-                subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email
+                subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email  # noqa
                 text_content = (
                     f"Hello, We are Familio and we have a invite to you.\n\n"
-                    f"Join your family member { request.user.first_name } { request.user.last_name } "
-                    f"that has invited you as a family to be part of Familio.\n\n"
+                    f"Join your family member { request.user.first_name } { request.user.last_name } "  # noqa
+                    f"that has invited you as a family to be part of Familio.\n\n"  # noqa
                     f"This tool will help you to be close to your family.\n\n"
                     f"Do you want to accept Michael Freitas's invitation?\n\n"
                     f"Click or copy the link in the browser.\n\n"
-                    f"{ request.scheme }://{request.META['HTTP_HOST'] }/members/approved/{ element.id }\n\n"
+                    f"{ request.scheme }://{request.META['HTTP_HOST'] }/members/approved/{ element.id }\n\n"  # noqa
                     f"Many thanks!\nRegards!"
                 )
                 send_mail(
@@ -186,7 +184,7 @@ def approved(request, familio_id):
     approve.approved = not approve.approved
     approve.save()
     messages.info(
-        request, f'The status has changed to Invite member: { approve.member.first_name } { approve.member.last_name } your Kinship: { approve.kinship}!')
+        request, f'The status has changed to Invite member: { approve.member.first_name } { approve.member.last_name } your Kinship: { approve.kinship}!')  # noqa
     return redirect('familio')
 
 

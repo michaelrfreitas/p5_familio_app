@@ -12,12 +12,57 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6 text-white my-4">
-            <h3 class="text-justify">
-               Test
-            </h3>
+<div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center pt-5">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-light text-black fam_sha">
+                <div class="card-body p-5">
+                    <h2>Free</h2>
+                    <ul>
+                        <li>Access Tree</li>
+                        <li>Access Blog</li>
+                        <li>Invite Members</li>
+                        <li>No Groups</li>
+                        <li>No Sharing Pictures</li>
+                        <li>10 Familio Members</li>
+                    </ul>
+                    <div class="text-center">
+                    <hr>
+                    <h3>€ 0.00/month</h3>
+                    <hr>
+                    {% if user.subscription %}
+                    <a class="btn btn-outline-danger btn-lg" href="{{ activate_url }}/subscriber/subscribed/{{ user.id }}">Cancel Subscrition</a>
+                    {% else %}
+                    <button type="button"class="btn btn-dark btn-lg" disabled>Current Plan</button>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-white text-black fam_sha">
+                <div class="card-body p-5">
+                    <h2>Familio Plan</h2>
+                    <ul>
+                        <li>Access Tree</li>
+                        <li>Access Blog</li>
+                        <li>Invite Members</li>
+                        <li>Unlimited Groups</li>
+                        <li>Sharing Pictures</li>
+                        <li>Unlimited Familio Members</li>
+                    </ul>
+                    <div class="text-center">
+                    <hr>
+                    <h3>€ 2.00/month</h3>
+                    <hr>
+                    {% if not user.subscription %}
+                    <a class="btn btn-outline-success btn-lg" href="{{ activate_url }}/subscriber/subscribed/{{ user.id }}">Subscribe</a>
+                    {% else %}
+                    <button type="button"class="btn btn-dark btn-lg" disabled>Current Plan</button>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
