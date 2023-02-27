@@ -27,7 +27,8 @@ def my_profile(request):
     """ Member edit their profiles """
     member = get_object_or_404(models.CustomUser, id=request.user.id)
     if request.method == 'POST':
-        form = forms.MyCustomUserForm(request.POST, request.FILES, instance=member)
+        form = forms.MyCustomUserForm(
+            request.POST, request.FILES, instance=member)
         if form.is_valid():
             form.save()
             return redirect('my_profile')
@@ -142,8 +143,12 @@ def tree(request):
 
 @login_required(redirect_field_name='account_login')
 def group(request):
-    """ A view to return the menu page """
-    return render(request, 'member/group.html')
+    if request.user.subscription:
+        """ A view to return the menu page """
+        return render(request, 'member/group.html')
+    else:
+        messages.info(request, 'You are using a free plan and can not access this')
+        return render(request, 'member/menu.html')
 
 
 @login_required(redirect_field_name='account_login')
@@ -165,30 +170,54 @@ def familio(request):
                     request, 'You have already invited this email address. See in list Familio Sent.')  # noqa
                 return redirect('familio')
             else:
-                element.member = request.user
-                element.save()
-                # Create the email message
-                subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email  # noqa
-                text_content = (
-                    f"Hello, We are Familio and we have a invite to you.\n\n"
-                    f"Join your family member { request.user.first_name } { request.user.last_name } "  # noqa
-                    f"that has invited you as a family to be part of Familio.\n\n"  # noqa
-                    f"This tool will help you to be close to your family.\n\n"
-                    f"Do you want to accept Michael Freitas's invitation?\n\n"
-                    f"Click or copy the link in the browser.\n\n"
-                    f"{ request.scheme }://{request.META['HTTP_HOST'] }/members/approved/{ element.id }\n\n"  # noqa
-                    f"Many thanks!\nRegards!"
-                )
-                send_mail(
-                    subject,
-                    text_content,
-                    from_email,
-                    [to],
-                    fail_silently=False,
-                )
-                messages.success(
-                    request, 'The invite was sent successfully!')
-                return redirect('familio')
+                if request.user.subscription or models.Familio.objects.filter(member=request.user).count() < 10:
+                    element.member = request.user
+                    element.save()
+                    # Create the email message
+                    subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email  # noqa
+                    text_content = (
+                        f"Hello, We are Familio and we have a invite to you.\n\n"
+                        f"Join your family member { request.user.first_name } { request.user.last_name } "  # noqa
+                        f"that has invited you as a family to be part of Familio.\n\n"  # noqa
+                        f"This tool will help you to be close to your family.\n\n"
+                        f"Do you want to accept { request.user.first_name } { request.user.last_name }'s invitation?\n\n"
+                        f"Click or copy the link in the browser.\n\n"
+                        f"{ request.scheme }://{request.META['HTTP_HOST'] }/members/approved/{ element.id }\n\n"  # noqa
+                        f"Many thanks!\nRegards!"
+                    )
+                    send_mail(
+                        subject,
+                        text_content,
+                        from_email,
+                        [to],
+                        fail_silently=False,
+                    )
+                    messages.success(
+                        request, 'The invite was sent successfully!')
+                    return redirect('familio')
+                else:
+                    messages.warning(
+                        request, 'Unfortunately, We can see that you are in a free plan and have exceeded the limit of 10 members, so we are sending your invite without adding this member to your family.')
+                    # Create the email message
+                    subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email  # noqa
+                    text_content = (
+                        f"Hello, We are Familio and we have a invite to you.\n\n"
+                        f"Join your family member { request.user.first_name } { request.user.last_name } "  # noqa
+                        f"that has invited you as a family to be part of Familio.\n\n"  # noqa
+                        f"This tool will help you to be close to your family.\n\n"
+                        f"Do you want to accept { request.user.first_name } { request.user.last_name }'s invitation?\n\n"
+                        f"Click or copy the link in the browser.\n\n"
+                        f"{ request.scheme }://{request.META['HTTP_HOST'] }\n\n"  # noqa
+                        f"Many thanks!\nRegards!"
+                    )
+                    send_mail(
+                        subject,
+                        text_content,
+                        from_email,
+                        [to],
+                        fail_silently=False,
+                    )
+                    return redirect('familio')
         else:
             messages.warning(request, 'This invite could not be sent.')
     form = forms.MyFamilioForm()

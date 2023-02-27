@@ -15,12 +15,22 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 text-white">
+            {% if user.subscription or user.is_superuser %}
+            <a class="menu-button" href="{% url 'familio' %}"><i class="fa-solid fa-group-arrows-rotate menu_i"></i>Members</a>
             <a class="menu-button" href="{% url 'tree' %}"><i class="fa-brands fa-sourcetree menu_i"></i>Tree</a>
             <a class="menu-button" href="{% url 'blog' %}"><i class="fa-solid fa-blog menu_i"></i>Blog</a>
             <a class="menu-button" href="{% url 'pictures' %}"><i class="fa-regular fa-images menu_i"></i>Pictures</a>
             <a class="menu-button" href="{% url 'group' %}"><i class="fa-solid fa-people-group menu_i"></i>Groups</a>
-            <a class="menu-button" href="{% url 'familio' %}"><i class="fa-solid fa-group-arrows-rotate menu_i"></i>Members</a>
             <a class="menu-button" href="{% url 'plans' %}"><i class="fa-solid fa-money-check-dollar menu_i"></i>Plans</a>
+            {% else %}
+            <a class="menu-button" href="{% url 'familio' %}"><i class="fa-solid fa-group-arrows-rotate menu_i"></i>Members</a>
+            <a class="menu-button" href="{% url 'tree' %}"><i class="fa-brands fa-sourcetree menu_i"></i>Tree</a>
+            <a class="menu-button" href="{% url 'blog' %}"><i class="fa-solid fa-blog menu_i"></i>Blog</a>
+            <a class="menu-button" href="{% url 'plans' %}"><i class="fa-solid fa-money-check-dollar menu_i"></i>Plans</a>
+            {% endif %}
+            {% if user.is_superuser %}
+            <a class="menu-button" href="{{ activate_url }}/admin"><i class="fa-solid fa-user-gear menu_i"></i>Admin</a>
+            {% endif %}
         </div>
         <div class="col-lg-6 d-flex flex-column">
             <canvas id="my_canvas" width="800" height="600"></canvas>
