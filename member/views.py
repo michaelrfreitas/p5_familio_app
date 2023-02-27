@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
+from subscriber.views import stripe_cancel
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf.urls.static import static
@@ -12,6 +13,8 @@ from django.conf.urls.static import static
 @login_required(redirect_field_name='account_login')
 def delete_member(request, user_id):
     member = get_object_or_404(models.CustomUser, id=user_id)
+    if member.subscription:
+        stripe_cancel(request)
     member.delete()
     return redirect('account_login')
 

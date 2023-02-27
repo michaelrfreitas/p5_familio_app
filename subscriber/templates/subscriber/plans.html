@@ -36,7 +36,7 @@
                     <h3>€ 0.00/month</h3>
                     <hr>
                     {% if user.subscription %}
-                    <a class="btn btn-outline-danger btn-lg" href="{{ activate_url }}/subscriber/subscribed/{{ user.id }}">Cancel Subscrition</a>
+                    <a class="btn btn-outline-danger btn-lg" href="{{ activate_url }}/subscriber/cancel/">Cancel Subscrition</a>
                     {% else %}
                     <button type="button"class="btn btn-dark btn-lg" disabled>Current Plan</button>
                     {% endif %}

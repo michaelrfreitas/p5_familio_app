@@ -40,15 +40,15 @@ def stripe_config(request):
 def create_checkout_session(request):
     if request.method == 'GET':
         if os.environ.get('DEVELOPMENT'):
-            domain_url = 'https://8000-michaelrfre-p5familioap-u4xrct1j8oc.ws-eu88.gitpod.io/'
+            domain_url = os.getenv('DOMAIN_URL')
         else:
             domain_url = f"{ request.scheme }://{request.META['HTTP_HOST'] }/"
         print(domain_url)
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
             checkout_session = stripe.checkout.Session.create(
-                client_reference_id=request.user.id if request.user.is_authenticated else None,
-                success_url=f'{domain_url}subscriber/subscribed/{request.user.id}' +
+                client_reference_id=request.user.id if request.user.is_authenticated else None,  # noqa
+                success_url=f'{domain_url}subscriber/subscribed/{request.user.id}' +  # noqa
                 '?session_id={CHECKOUT_SESSION_ID}',
                 cancel_url=domain_url + 'subscriber/plans',
                 payment_method_types=['card'],
@@ -100,4 +100,23 @@ def stripe_webhook(request):
         user.save()
         print(user.username + ' just subscribed.')
 
+    return HttpResponse(status=200)
+
+
+@csrf_exempt
+def stripe_cancel(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    if os.environ.get('DEVELOPMENT'):
+        domain_url = os.getenv('DOMAIN_URL')
+    else:
+        domain_url = f"{ request.scheme }://{request.META['HTTP_HOST'] }/"
+    try:
+        stripe.Subscription.delete(
+            request.user.stripeSubscriptionId,
+            prorate=True,
+            invoice_now=True
+        )
+        return redirect(f'{domain_url}subscriber/subscribed/{request.user.id}')
+    except Exception as e:
+        return messages.warning(request, e)
     return HttpResponse(status=200)
