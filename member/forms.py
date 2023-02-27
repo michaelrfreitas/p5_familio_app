@@ -26,6 +26,13 @@ class MyCustomSignupForm(SignupForm):
         return user
 
 
+class MyCustomUserForm(forms.ModelForm):
+
+    class Meta:
+        model = models.CustomUser
+        fields = ['first_name', 'last_name', 'phone', 'dob', 'photo']
+
+
 class MyFamilioForm(forms.ModelForm):
 
     class Meta:

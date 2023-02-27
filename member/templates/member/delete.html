@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "My Profile" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-light text-black fam_sha">
+                <div class="card-body p-5 text-center">
+                    <h2 class="fw-bold text-uppercase mb-2">{% trans "Confirm Delete Account" %}</h2>
+                    <div class="form-outline form-white mb-2">
+                        <form method="post" action="{{ activate_url }}/members/delete_member/{{ user.id }}">
+                            {% csrf_token %}
+                            <h3><b>Are you sure you want to delete your account {{ user.email }}?</b></h3>
+
+                            <h4>All invites received will be deleted and if you have a subscription will be cancelled.</h4>
+                            <button class="primaryAction btn btn btn-outline-danger btn-lg"
+                                type="submit">{% trans 'Confirm'%}</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

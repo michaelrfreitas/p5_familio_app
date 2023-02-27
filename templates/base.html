@@ -68,7 +68,7 @@
                     </div>
                     </a>
                     <div class="dropdown-menu border-1" aria-labelledby="user-options">
-                        <a href="" class="dropdown-item">My Profile</a>
+                        <a href="{% url 'my_profile' %}" class="dropdown-item">My Profile</a>
                         <a href="{% url 'account_change_password' %}" class="dropdown-item">Change Password</a>
                         <a href="{% url 'account_email' %}" class="dropdown-item">Change Email</a>
                         <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>

@@ -10,4 +10,5 @@ urlpatterns = [
     path('approved/<familio_id>', views.approved, name='approved'),
     path('edit_invite/<familio_id>', views.edit_invite, name='edit_invite'),
     path('delete_invite/<familio_id>', views.delete_invite, name='delete_invite'),
+    path('my_profile', views.my_profile, name='my_profile'),
 ]

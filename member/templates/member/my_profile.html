@@ -1,3 +1,35 @@
-<a href="{% url 'delete_member' user.id %}"><button class="primaryAction" type="submit">Delete
-    Account</button></a>
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "My Profile" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-light text-black fam_sha">
+                <div class="card-body p-5 text-center">
+                    <h2 class="fw-bold text-uppercase mb-2">{% trans "My Profile" %}</h2>
+                    <div class="form-outline form-white mb-2">
+                        <form class="signup" id="signup_form" method="post"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+                            <button class="primaryAction btn btn btn-outline-dark btn-md"
+                                type="submit">{% trans 'Update'%}</button>
+                            <a class="primaryAction btn btn btn-outline-danger btn-md"
+                                href="{{ activate_url }}/members/delete_member/{{ user.id }}">{% trans 'Delete'%}</a>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+{% endblock %}

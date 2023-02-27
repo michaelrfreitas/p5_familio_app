@@ -12,11 +12,32 @@ from django.conf.urls.static import static
 
 @login_required(redirect_field_name='account_login')
 def delete_member(request, user_id):
-    member = get_object_or_404(models.CustomUser, id=user_id)
-    if member.subscription:
-        stripe_cancel(request)
-    member.delete()
-    return redirect('account_login')
+    if request.method == 'POST':
+        member = get_object_or_404(models.CustomUser, id=user_id)
+        models.Familio.objects.filter(email=member.email).delete()
+        if member.subscription:
+            stripe_cancel(request)
+        member.delete()
+        return redirect('account_login')
+    return render(request, 'member/delete.html')
+
+
+@login_required(redirect_field_name='account_login')
+def my_profile(request):
+    """ Member edit their profiles """
+    member = get_object_or_404(models.CustomUser, id=request.user.id)
+    if request.method == 'POST':
+        form = forms.MyCustomUserForm(request.POST, request.FILES, instance=member)
+        if form.is_valid():
+            form.save()
+            return redirect('my_profile')
+        else:
+            messages.warning(request, 'This profile could not be updated.')
+    form = forms.MyCustomUserForm(instance=member)
+    context = {
+        'form': form,
+    }
+    return render(request, 'member/my_profile.html', context)
 
 
 @login_required(redirect_field_name='account_login')
