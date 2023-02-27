@@ -1,12 +1,11 @@
-
+import json
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
 from django.contrib import messages
 from django.core.mail import send_mail
-import json
-import os
 from django.conf.urls.static import static
 
 
@@ -40,15 +39,17 @@ def tree(request):
         my_img = request.user.photo.url
     # Loop to collect all data in familio relationship
     for familio in familios:
-        # Collect specific members details from each familio member
-        member = get_object_or_404(models.CustomUser, email=familio.email)
-        # If have a Father kinship
-        if familio.kinship == 'Father':
-            ppid_main = member.id
-        # If have a Mother kinship
-        elif familio.kinship == 'Mother':
-            pid_main = member.id
-            tag_main = 'childrenTemplate'
+        # Check if the familio relationship is approved
+        if familio.approved:
+            # Collect specific members details from each familio member
+            member = get_object_or_404(models.CustomUser, email=familio.email)
+            # If have a Father kinship
+            if familio.kinship == 'Father':
+                ppid_main = member.id
+            # If have a Mother kinship
+            elif familio.kinship == 'Mother':
+                pid_main = member.id
+                tag_main = 'childrenTemplate'
     # Add data regarding main profile to Data Array
     data.append({
                 'id': request.user.id,
@@ -107,7 +108,7 @@ def tree(request):
                 'tags': [tag],
             })
     path = 'static/json'
-    file = f'{request.user.username}{request.user.id}.json'
+    file = f'{request.user.email}.json'
     out_file = open(os.path.join(path, file), "w")
     out_file.write('')
     json.dump(data, out_file)

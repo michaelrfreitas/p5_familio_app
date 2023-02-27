@@ -52,7 +52,7 @@
 
     async function getData() {
         try {
-            let res = await fetch("/static/json/{{ user.username }}{{user.id}}.json");
+            let res = await fetch("/static/json/{{user.email}}.json");
             return await res.json();
         } catch (error) {
             alert("Ooops! Something's gone wrong. Please, try again later.");
