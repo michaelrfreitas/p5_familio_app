@@ -41,6 +41,8 @@ class CustomUser(AbstractUser):
     photo = models.ImageField(
         upload_to='static/media/', blank=True, null=True, default="")
     subscription = models.BooleanField(default=False)
+    stripeCustomerId = models.CharField(max_length=255, default="")
+    stripeSubscriptionId = models.CharField(max_length=255, default="")
 
 
 class Familio(models.Model):

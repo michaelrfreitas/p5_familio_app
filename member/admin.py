@@ -5,7 +5,7 @@ from . import models
 @admin.register(models.CustomUser)
 class UserAdmin (admin.ModelAdmin):
     list_display = ('username', 'first_name', 'last_name',
-                    'email', 'dob', 'subscription')
+                    'email', 'dob', 'subscription', 'stripeCustomerId')
     list_filter = ('subscription', 'dob')
     search_fields = ('first_name', 'last_name', 'username',
                      'email', 'dob')

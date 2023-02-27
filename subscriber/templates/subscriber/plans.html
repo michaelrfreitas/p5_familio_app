@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_js %}
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -56,7 +61,7 @@
                     <h3>€ 2.00/month</h3>
                     <hr>
                     {% if not user.subscription %}
-                    <a class="btn btn-outline-success btn-lg" href="{{ activate_url }}/subscriber/subscribed/{{ user.id }}">Subscribe</a>
+                    <button class="btn btn-outline-success btn-lg" type="submit" id="submitBtn">Subscribe</button>
                     {% else %}
                     <button type="button"class="btn btn-dark btn-lg" disabled>Current Plan</button>
                     {% endif %}
