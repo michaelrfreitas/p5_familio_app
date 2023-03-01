@@ -144,10 +144,23 @@ def tree(request):
 @login_required(redirect_field_name='account_login')
 def group(request):
     if request.user.subscription:
-        """ A view to return the menu page """
-        return render(request, 'member/group.html')
+        """ A view to return the group page """
+        member = get_object_or_404(models.CustomUser, id=request.user.id)
+        if request.method == 'POST':
+            form = forms.MyGroupForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('group')
+            else:
+                messages.warning(request, 'This group can not be created.')
+        form = forms.MyGroupForm(my_familio=member)
+        context = {
+            'form': form,
+        }
+        return render(request, 'member/group.html', context)
     else:
-        messages.info(request, 'You are using a free plan and can not access this')
+        messages.info(
+            request, 'You are using a free plan and can not access this')
         return render(request, 'member/menu.html')
 
 

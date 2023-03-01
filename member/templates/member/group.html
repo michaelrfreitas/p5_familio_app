@@ -1,26 +1,32 @@
 {% extends "base.html" %}
-{% load static %}
 
-{% block page_header %}
-<div class="container header-container">
-    <div class="row">
-        <div class="col">
+{% load i18n %}
 
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% block head_title %}{% trans "Groups" %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6 text-white my-4">
-            <h3 class="text-justify">
-               Test
-            </h3>
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-light text-black fam_sha">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold text-uppercase mb-2">{% trans "Groups" %}</h2>
+                    <div class="form-outline form-white mb-2">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+                            <button class="primaryAction btn btn btn-outline-dark btn-md"
+                                type="submit">{% trans 'Save'%}</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
-
-

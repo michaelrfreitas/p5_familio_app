@@ -37,10 +37,15 @@ class MyFamilioForm(forms.ModelForm):
 
     class Meta:
         model = models.Familio
-        fields = ['email', 'level', 'kinship']
+        fields = ['email', 'name', 'level', 'kinship']
 
 
 class MyGroupForm(forms.ModelForm):
+
+    def __init__(self, my_familio, *args, **kwargs):
+        super(MyGroupForm, self).__init__(*args, **kwargs)
+        self.fields['familio'].queryset = models.Familio.objects.filter(
+            member=my_familio)
 
     class Meta:
         model = models.Group

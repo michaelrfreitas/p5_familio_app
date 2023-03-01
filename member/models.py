@@ -44,6 +44,9 @@ class CustomUser(AbstractUser):
     stripeCustomerId = models.CharField(max_length=255, default="")
     stripeSubscriptionId = models.CharField(max_length=255, default="")
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class Familio(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL)
@@ -52,15 +55,25 @@ class Familio(models.Model):
     email = models.EmailField(null=False)
     approved = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=50, default='')
 
     class Meta:
         ordering = ['created_on']
 
+    def __str__(self):
+        return f'{self.name} - {self.kinship}'
+
 
 class Group(models.Model):
-    familio = models.ForeignKey(Familio, on_delete=models.CASCADE)
+    familio = models.ManyToManyField(Familio)
     grp_name = models.CharField(max_length=50, null=False)
     created_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['created_on']
+
+    def get_familios(self):
+        return "\n".join([f.name for f in self.familio.all()])
+
+    def __str__(self):
+        return self.grp_name

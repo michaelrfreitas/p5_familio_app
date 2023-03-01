@@ -13,10 +13,10 @@ class UserAdmin (admin.ModelAdmin):
 
 @admin.register(models.Familio)
 class FamilioAdmin (admin.ModelAdmin):
-    list_display = ('email', 'kinship', 'level',
+    list_display = ('email', 'name', 'kinship', 'level',
                     'member', 'approved', 'created_on')
     list_filter = ('kinship', 'level', 'approved', 'created_on')
-    search_fields = ('email', 'member', 'kinship')
+    search_fields = ('email', 'member', 'kinship', 'name')
     actions = ['approve_familio']
 
     def approve_familio(self, request, queryset):
@@ -25,6 +25,6 @@ class FamilioAdmin (admin.ModelAdmin):
 
 @admin.register(models.Group)
 class GroupAdmin (admin.ModelAdmin):
-    list_display = ('grp_name', 'created_on')
+    list_display = ('grp_name', 'get_familios', 'created_on')
     list_filter = ('familio', 'created_on')
-    search_fields = ('grp_name',)
+    search_fields = ('grp_name', 'familio')
