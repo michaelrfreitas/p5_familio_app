@@ -68,6 +68,7 @@ class MyCustomUserForm(forms.ModelForm):
                 'placeholder': '0XX XXX XXXX',
             }),
             'dob': forms.DateInput(attrs={
+                'type': 'date',
                 'class': "form-control",
                 'style': 'max-width: 300px;',
                 'placeholder': 'Date of Birth',
