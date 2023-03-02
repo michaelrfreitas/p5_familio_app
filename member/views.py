@@ -147,19 +147,17 @@ def tree(request):
                 'img': img,
                 'tags': [tag],
             })
-    try:
-        if os.environ.get('DEVELOPMENT'):
-            path = f'static/json'
-        else:
-            path = f'{settings.STATIC_URL}/json'
-        file = f'{request.user.email}.json'
-        out_file = open(os.path.join(path, file), "w")
-        out_file.write('')
-        json.dump(data, out_file)
-        out_file.close()
-    except ValueError as e:
-        messages.warning(request, e)
-        return redirect('menu')
+    if os.environ.get('DEVELOPMENT'):
+        path = f'static/json'
+    else:
+        path = f'{settings.STATIC_URL}/json'
+    if not os.path.exists(path):
+        os.mkdir(path)
+    file = f'{request.user.email}.json'
+    out_file = open(os.path.join(path, file), "w")
+    out_file.write('')
+    json.dump(data, out_file)
+    out_file.close()
     return render(request, 'member/tree.html')
 
 
