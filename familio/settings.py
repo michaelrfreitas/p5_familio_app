@@ -106,6 +106,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 LOGIN_REDIRECT_URL = '/members/menu'
 LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SESSION_REMEMBER = False
 
 ACCOUNT_FORMS = {'signup': 'member.forms.MyCustomSignupForm', 'login': 'member.forms.MyCustomLoginForm'}
 AUTH_USER_MODEL = 'member.CustomUser'
