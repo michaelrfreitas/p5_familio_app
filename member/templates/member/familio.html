@@ -4,26 +4,82 @@
 
 {% block content %}
 <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100 padtop">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div class="card bg-light text-black" style="border-radius: 1rem;">
-                <div class="card-body p-5 text-center">
+            <div class="card bg-light text-black fam_sha">
+                <div class="card-body">
                     <h1 class="fw-bold mb-2 text-uppercase">{% trans "Familio Invite" %}</h1>
-                    <div class="form-outline form-white mb-4">
-                        <form method="POST" action="{% url 'familio' %}">
+                    <div class="form-outline form-white mb-2">
+                        <form method="POST">
                             {% csrf_token %}
                             {{ form.as_p }}
                             {% if redirect_field_value %}
                             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                             {% endif %}
-                            <button class="primaryAction btn btn btn-outline-dark btn-lg" type="submit">{% trans 'Send'%}</button>
-
+                            <hr>
+                            <p>If you don't have the member email or don't want send an email to member but you want to see the family member in your family tree, leave the email blank.</p>
+                            <hr>
+                            {% if request.resolver_match.url_name == 'familio' %}
+                            <button class="primaryAction btn btn btn-outline-dark btn-md"
+                                type="submit">{% trans 'Send'%}</button>
+                            {% else %}
+                            <button class="primaryAction btn btn btn-outline-dark btn-md"
+                                type="submit">{% trans 'Update'%}</button>
+                            {% endif %}
                         </form>
                     </div>
 
                 </div>
             </div>
         </div>
+        {% if familios or receives %}
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5 fam_over">
+            <div class="card bg-white text-black fam_sha">
+                <div class="card-body">
+                    {% if familios %}
+                    <div class="mb-md-3 mt-md-2">
+                        <h2 class="fw-bold mb-2 text-uppercase">{% trans "Familio Sent" %}</h2>
+                        {% for familio in familios %}
+                        <div class="form-outline form-white m-3 p-3 fam_sha">
+                            <p>
+                                Member: {{ familio.name }}<br>
+                                Kinship: {{ familio.kinship }}<br>
+                                Level: {{ familio.level }}<br>
+                                Status: {% if familio.approved %} Approved {% elif not familio.email %} Unverified {% else %} Pending {% endif %} <br>
+                                <a class="btn btn-outline-warning btn-md"
+                                    href="{{ activate_url }}/members/edit_invite/{{ familio.id }}">Edit</a> 
+                                <a class="btn btn-outline-danger btn-md"
+                                    href="{{ activate_url }}/members/delete_invite/{{ familio.id }}">Delete</a>
+                            </p>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+                {% endif %}
+                <div class="card-body">
+                    {% if receives %}
+                    <div class="mb-md-3 mt-md-2">
+                        <h2 class="fw-bold mb-2 text-uppercase">{% trans "Familio Received" %}</h2>
+                        {% for receive in receives %}
+                        <div class="form-outline form-white m-3 p-3 fam_sha">
+                            <p>
+                                Member: {{ receive.member.get_full_name }}<br>
+                                Kinship: {{ receive.kinship }}<br>
+                                Status: {% if receive.approved %} Approved <br> <a class="btn btn-outline-danger btn-md"
+                                    href="{{ activate_url }}/members/approved/{{ receive.id }}">Disapprove</a>
+                                {% else %} Pending <br> <a class="btn btn-outline-success btn-md"
+                                    href="{{ activate_url }}/members/approved/{{ receive.id }}">Approve</a>{% endif %}
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

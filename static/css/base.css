@@ -5,7 +5,7 @@ html {
 body {
     background: linear-gradient(to bottom,
             rgba(0, 0, 0, 0),
-            rgba(0, 0, 0, 100)), url('/media/family.jpg') no-repeat center center fixed;
+            rgba(0, 0, 0, 100)), url('https://res.cloudinary.com/mfreitas/image/upload/v1673350128/static/media/family.jpg') no-repeat center center fixed;
     background-size: cover;
     height: calc(100vh - 164px);
     color: #555;
@@ -46,11 +46,11 @@ body {
 
 
 .footer_i {
-    font-size:48px;
+    font-size: 42px;
 }
 
 .menu_i {
-    font-size:400%;
+    font-size: 400%;
 }
 
 .btn-black {
@@ -181,11 +181,15 @@ a.category-badge>span.badge:hover {
 }
 
 #footer {
-    bottom: 0;
-    height: 15%;
+    position: static;
     left: 0;
-    position: fixed;
-    width:100%;
+    right: 0;
+    bottom: 0;
+    min-height: 100px;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    box-sizing: border-box;
 }
 
 #photo_sm {
@@ -197,6 +201,50 @@ a.category-badge>span.badge:hover {
 
 .nav-width {
     width: 90%;
+}
+
+.fam_sha {
+    border: 1px solid;
+    padding-left: 5px;
+    padding-right: 5px;
+    box-shadow: 5px 10px #000;
+    border-radius: 1rem;
+}
+
+.fam_over {
+    overflow: auto;
+    width: 100%;
+    height: 80%;
+}
+
+#tree {
+    width: 100%;
+    height: 100%;
+}
+
+.field_1 {
+    text-transform: uppercase;
+}
+
+[data-n-id] rect {
+    fill: #750000;
+}
+
+[data-l-id] path {
+    stroke: #750000;
+    stroke-width: 3;
+}
+
+[data-ctrl-n-menu-id] rect:hover~circle {
+    fill: white;
+}
+
+[data-id='search'] {
+    display: block !important;
+}
+
+.padtop {
+    padding-top: 6rem;
 }
 
 /* -------------------------------- Media Queries */

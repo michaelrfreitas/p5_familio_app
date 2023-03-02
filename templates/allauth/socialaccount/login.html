@@ -10,8 +10,8 @@
       <div class="card bg-light text-black" style="border-radius: 1rem;">
         <div class="card-body p-5 text-center">
           {% if process == "connect" %}
-          <h1 class="fw-bold text-uppercase mb-2">{% blocktrans with provider.name as provider %}Connect
-            {{ provider }}{% endblocktrans %}</h1>
+          <h2 class="fw-bold text-uppercase mb-2">{% blocktrans with provider.name as provider %}Connect
+            {{ provider }}{% endblocktrans %}</h2>
 
           <p>{% blocktrans with provider.name as provider %}You are about to connect a new third party account from
             {{ provider }}.{% endblocktrans %}</p>
@@ -25,7 +25,7 @@
 
           <form method="post">
             {% csrf_token %}
-            <button class="primaryAction btn btn btn-outline-dark btn-lg" type="submit">{% trans "Continue" %}</button>
+            <button class="primaryAction btn btn btn-outline-dark btn-md" type="submit">{% trans "Continue" %}</button>
           </form>
         </div>
       </div>

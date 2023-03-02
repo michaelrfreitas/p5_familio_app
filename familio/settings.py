@@ -31,6 +31,10 @@ DEBUG = development
 
 ALLOWED_HOSTS = [os.getenv('HEROKU_HOSTNAME'), 'localhost']
 
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_PRICE_ID = os.getenv('STRIPE_PRICE_ID')
+STRIPE_ENDPOINT_SECRET = os.getenv('STRIPE_ENDPOINT_SECRET')
 
 # Application definition
 
@@ -52,6 +56,7 @@ INSTALLED_APPS = [
     'blog',
     'home',
     'member',
+    'subscriber',
 ]
 
 MIDDLEWARE = [
@@ -100,9 +105,10 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 LOGIN_REDIRECT_URL = '/members/menu'
 LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SESSION_REMEMBER = False
 
-ACCOUNT_FORMS = {'signup': 'member.forms.MyCustomSignupForm'}
+ACCOUNT_FORMS = {'signup': 'member.forms.MyCustomSignupForm', 'login': 'member.forms.MyCustomLoginForm'}
 AUTH_USER_MODEL = 'member.CustomUser'
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -174,7 +180,6 @@ STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Default primary key field type
@@ -183,7 +188,10 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Send email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+if development:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_SERVER')
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('USER_EMAIL')

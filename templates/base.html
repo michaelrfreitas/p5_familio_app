@@ -8,6 +8,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+      content="Familio is a tool to create your family tree and interact with your family members easily in a blog channel. Sharing things with your family to become close to your blood. There are 3 levels of family members and you can start to create your tree and see how it can be great for your life. Doesn't matter where you are but all family can stay together. It's not social media, it's blood media that can keep the family close than ever.">
+  <meta name="keywords" content="family, family, blood media, family-tree, tree, family members">
+  <meta name="author" content="Michael Freitas">
   {% endblock %}
 
   {% block extra_meta %}
@@ -20,6 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.ico' %}"/>
   {% endblock %}
 
   {% block extra_css %}
@@ -41,11 +46,13 @@
 
 <body>
   <header class="container-fluid fixed-top">
-    <div class="row bg-white pt-lg-2 d-flex flex-nowrap">
+    <div class="row bg-white pt-lg-1 d-flex flex-nowrap">
       <nav class="navbar navbar-expand-lg navbar-light nav-width">
         <a class="navbar-brand logo-font" href="{% url 'home' %}"><h2><strong>Familio</strong></h2></a>
         {% if not request.user.is_authenticated %}
           {% include 'includes/main_nav.html' %}
+        {% else %}
+          {% include 'includes/nav_menu.html' %}
         {% endif %}
       </nav>
         <ul class="list-inline list-unstyled align-items-right my-1">
@@ -65,7 +72,7 @@
                     </div>
                     </a>
                     <div class="dropdown-menu border-1" aria-labelledby="user-options">
-                        <a href="" class="dropdown-item">My Profile</a>
+                        <a href="{% url 'my_profile' %}" class="dropdown-item">My Profile</a>
                         <a href="{% url 'account_change_password' %}" class="dropdown-item">Change Password</a>
                         <a href="{% url 'account_email' %}" class="dropdown-item">Change Email</a>
                         <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
@@ -102,12 +109,10 @@
 
  <!-- Footer -->
  <footer id="footer">
-  <p class="m-1 text-center text-white">
-      <i class="footer_i fab fa-facebook-square ms-2"></i>
-      <i class="footer_i fab fa-linkedin ms-2"></i>
-      <i class="footer_i fab fa-instagram-square ms-2"></i>
-      <i class="footer_i fab fa-youtube-square ms-2"></i>
-  </p>
+      <a class="text-white" href="https://www.facebook.com/profile.php?id=100089476296753" target="_blank" rel="noopener noreferrer"><i class="footer_i fab fa-facebook-square ms-2"></i></a>
+      <a class="text-white" href="https://www.linkedin.com/company/familio-uk/" target="_blank" rel="noopener noreferrer"><i class="footer_i fab fa-linkedin ms-2"></i></a>
+      <a class="text-white" href="https://instagram.com/familio.uk?igshid=YmMyMTA2M2Y=" target="_blank" rel="noopener noreferrer"><i class="footer_i fab fa-instagram-square ms-2"></i></a>
+      <a class="text-white" href="https://www.youtube.com/@familiouk/" target="_blank" rel="noopener noreferrer"><i class="footer_i fab fa-youtube-square ms-2"></i></a>
   <br>
   <p class="m-1 text-center text-white">Familio <i class="fa fa-copyright"></i> Copyright 2022 </p>
 </footer>
