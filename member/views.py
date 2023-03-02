@@ -1,5 +1,6 @@
 import json
 import os
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from . import models
@@ -7,7 +8,6 @@ from . import forms
 from subscriber.views import stripe_cancel
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.conf.urls.static import static
 
 
 @login_required(redirect_field_name='account_login')
@@ -146,12 +146,19 @@ def tree(request):
                 'img': img,
                 'tags': [tag],
             })
-    path = 'static/json'
-    file = f'{request.user.email}.json'
-    out_file = open(os.path.join(path, file), "w")
-    out_file.write('')
-    json.dump(data, out_file)
-    out_file.close()
+    try:
+        if os.environ.get('DEVELOPMENT'):
+            path = f'static/json'
+        else:
+            path = f'{settings.STATIC_URL}/json'
+        file = f'{request.user.email}.json'
+        out_file = open(os.path.join(path, file), "w")
+        out_file.write('')
+        json.dump(data, out_file)
+        out_file.close()
+    except ValueError as e:
+        messages.warning(request, e)
+        return redirect('menu')
     return render(request, 'member/tree.html')
 
 
