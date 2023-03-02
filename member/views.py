@@ -66,9 +66,13 @@ def tree(request):
     # Loop to collect all data in familio relationship
     for familio in familios:
         # Check if the familio relationship is approved
-        if familio.approved:
+        if familio.approved or not familio.email:
             # Collect specific members details from each familio member
-            member = get_object_or_404(models.CustomUser, email=familio.email)
+            if familio.email:
+                member = get_object_or_404(
+                    models.CustomUser, email=familio.email)
+            else:
+                member = familio
             # If have a Father kinship
             if familio.kinship == 'Father':
                 ppid_main = member.id
@@ -89,14 +93,19 @@ def tree(request):
     # Loop to collect all data in familio relationship
     for familio in familios:
         # Check if the familio relationship is approved
-        if familio.approved:
+        if familio.approved or not familio.email:
             # Collect specific members details from each familio member
-            member = get_object_or_404(models.CustomUser, email=familio.email)
-            # Check if there is image in the profiles
-            if member.photo == '':
-                img = ''
+            if familio.email:
+                member = get_object_or_404(
+                    models.CustomUser, email=familio.email)
+                # Check if there is image in the profiles
+                if member.photo == '':
+                    img = ''
+                else:
+                    img = member.photo.url
             else:
-                img = member.photo.url
+                member = familio
+                img = ''
             # If have a Father kinship
             if familio.kinship == 'Father':
                 pid = pid_main
@@ -124,11 +133,15 @@ def tree(request):
                 pid = ''
                 ppid = ''
             # Add the data compiled to the Data Array for JSON file
+            if familio.email:
+                name = member.first_name + ' ' + member.last_name
+            else:
+                name = member.name
             data.append({
                 'id': member.id,
                 'pid': pid,
                 'ppid': ppid,
-                'name': member.first_name + ' ' + member.last_name,
+                'name': name,
                 'parent': familio.kinship,
                 'img': img,
                 'tags': [tag],
@@ -203,6 +216,7 @@ def delete_group(request, group_id):
     """  Member delete the Group """
     group = get_object_or_404(models.Group, id=group_id)
     group.delete()
+    messages.success(request, 'Group successful deleted.')
     return redirect('group')
 
 
@@ -252,7 +266,7 @@ def familio(request):
                     return redirect('familio')
                 else:
                     messages.warning(
-                        request, 'Unfortunately, We can see that you are in a free plan and have exceeded the limit of 10 members, so we are sending your invite without adding this member to your family.')
+                        request, 'Unfortunately, We can see that you are in a free plan and have exceeded the limit of 10 members, so we are not adding this member to your family.')
                     # Create the email message
                     subject, from_email, to = '[Familio] Invite', 'familio.uk@gmail.com', element.email  # noqa
                     text_content = (
@@ -274,7 +288,7 @@ def familio(request):
                     )
                     return redirect('familio')
         else:
-            messages.warning(request, 'This invite could not be sent.')
+            messages.warning(request, 'This member could not be added.')
     form = forms.MyFamilioForm()
     familios = models.Familio.objects.filter(member=request.user)
     receives = models.Familio.objects.filter(email=request.user.email)
@@ -305,9 +319,10 @@ def edit_invite(request, familio_id):
         form = forms.MyFamilioForm(request.POST, instance=invite)
         if form.is_valid():
             form.save()
+            messages.success(request, 'You have updated successfully the member.')
             return redirect('familio')
         else:
-            messages.warning(request, 'This invite could not be updated.')
+            messages.warning(request, 'This member could not be updated.')
     form = forms.MyFamilioForm(instance=invite)
     familios = models.Familio.objects.filter(member=request.user)
     receives = models.Familio.objects.filter(email=request.user.email)
@@ -324,4 +339,5 @@ def delete_invite(request, familio_id):
     """  Member delete the Familio member invites """
     invite = get_object_or_404(models.Familio, id=familio_id)
     invite.delete()
+    messages.success(request, 'The member has been deleted.')
     return redirect('familio')

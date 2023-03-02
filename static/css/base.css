@@ -181,7 +181,7 @@ a.category-badge>span.badge:hover {
 }
 
 #footer {
-    position: fixed;
+    position: static;
     left: 0;
     right: 0;
     bottom: 0;
@@ -241,6 +241,10 @@ a.category-badge>span.badge:hover {
 
 [data-id='search'] {
     display: block !important;
+}
+
+.padtop {
+    padding-top: 6rem;
 }
 
 /* -------------------------------- Media Queries */

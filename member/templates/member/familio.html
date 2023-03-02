@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
+    <div class="row d-flex justify-content-center align-items-center h-100 padtop">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <div class="card bg-light text-black fam_sha">
                 <div class="card-body">
@@ -45,7 +45,7 @@
                                 Member: {{ familio.name }}<br>
                                 Kinship: {{ familio.kinship }}<br>
                                 Level: {{ familio.level }}<br>
-                                Status: {% if familio.approved %} Approved {% else %} Pending {% endif %} <br>
+                                Status: {% if familio.approved %} Approved {% elif not familio.email %} Unverified {% else %} Pending {% endif %} <br>
                                 <a class="btn btn-outline-warning btn-md"
                                     href="{{ activate_url }}/members/edit_invite/{{ familio.id }}">Edit</a> 
                                 <a class="btn btn-outline-danger btn-md"

@@ -1,6 +1,21 @@
-from allauth.account.forms import SignupForm
+from allauth.account.forms import SignupForm, LoginForm
 from django import forms
 from . import models
+
+
+class MyCustomLoginForm(LoginForm):
+
+    def __init__(self, *args, **kwargs):
+        super(MyCustomLoginForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+    def login(self, *args, **kwargs):
+
+        # Add your own processing here.
+
+        # You must return the original result.
+        return super(MyCustomLoginForm, self).login(*args, **kwargs)
 
 
 class MyCustomSignupForm(SignupForm):
@@ -14,6 +29,11 @@ class MyCustomSignupForm(SignupForm):
     dob = forms.DateField(label=('DOB'), widget=forms.DateInput(
         format=('%d/%m/%Y'), attrs={'type': 'date'}), required=True)
     photo = forms.ImageField(label='Photo', required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(MyCustomSignupForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
     def save(self, request):
         user = super(MyCustomSignupForm, self).save(request)
@@ -31,6 +51,33 @@ class MyCustomUserForm(forms.ModelForm):
     class Meta:
         model = models.CustomUser
         fields = ['first_name', 'last_name', 'phone', 'dob', 'photo']
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'First Name',
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Last Name'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': '0XX XXX XXXX',
+            }),
+            'dob': forms.DateInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Date of Birth',
+            })}
+        labels = {
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'phone': 'Phone',
+            'dob': 'DOB',
+        }
 
 
 class MyFamilioForm(forms.ModelForm):
@@ -38,6 +85,33 @@ class MyFamilioForm(forms.ModelForm):
     class Meta:
         model = models.Familio
         fields = ['email', 'name', 'level', 'kinship']
+        widgets = {
+            'email': forms.EmailInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Email',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Name'
+            }),
+            'level': forms.Select(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Level',
+            }),
+            'kinship': forms.Select(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Kinship',
+            })}
+        labels = {
+            'email': 'Email Address',
+            'name': 'Full Name',
+            'level': 'Member Level',
+            'kinship': 'Kinship',
+        }
 
 
 class MyGroupForm(forms.ModelForm):
@@ -51,3 +125,18 @@ class MyGroupForm(forms.ModelForm):
     class Meta:
         model = models.Group
         fields = ['grp_name', 'familio']
+        widgets = {
+            'grp_name': forms.TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Group Name',
+            }),
+            'familio': forms.SelectMultiple(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Familio Members'
+            })}
+        labels = {
+            'grp_name': 'Group Name',
+            'familio': 'Familio Members'
+        }
