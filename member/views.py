@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 
 
+
 @login_required(redirect_field_name='account_login')
 def delete_member(request, user_id):
     if request.method == 'POST':

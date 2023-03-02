@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_settings_export.settings_export',
             ],
         },
     },
@@ -198,3 +199,7 @@ EMAIL_HOST_USER = os.getenv('USER_EMAIL')
 EMAIL_HOST_PASSWORD = os.getenv('USER_PASSWORD')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+SETTINGS_EXPORT = [
+    'STATIC_URL',
+]
