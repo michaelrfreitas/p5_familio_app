@@ -152,6 +152,7 @@ def tree(request):
             path = f'static/json'
         else:
             path = f'{settings.STATIC_URL}/json'
+        os.mkdir(path)
         file = f'{request.user.email}.json'
         out_file = open(os.path.join(path, file), "w")
         out_file.write('')
