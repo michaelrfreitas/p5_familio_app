@@ -16,6 +16,9 @@
                             {% if redirect_field_value %}
                             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                             {% endif %}
+                            <hr>
+                            <p>If you don't have the member email or don't want send an email to member but you want to see the family member in your family tree, leave the email blank.</p>
+                            <hr>
                             {% if request.resolver_match.url_name == 'familio' %}
                             <button class="primaryAction btn btn btn-outline-dark btn-md"
                                 type="submit">{% trans 'Send'%}</button>
@@ -39,7 +42,7 @@
                         {% for familio in familios %}
                         <div class="form-outline form-white m-3 p-3 fam_sha">
                             <p>
-                                Email: {{ familio.email }}<br>
+                                Member: {{ familio.name }}<br>
                                 Kinship: {{ familio.kinship }}<br>
                                 Level: {{ familio.level }}<br>
                                 Status: {% if familio.approved %} Approved {% else %} Pending {% endif %} <br>

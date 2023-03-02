@@ -31,6 +31,7 @@ def my_profile(request):
             request.POST, request.FILES, instance=member)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Your profile has been updated.')
             return redirect('my_profile')
         else:
             messages.warning(request, 'This profile could not be updated.')
@@ -147,21 +148,62 @@ def group(request):
         """ A view to return the group page """
         member = get_object_or_404(models.CustomUser, id=request.user.id)
         if request.method == 'POST':
-            form = forms.MyGroupForm(request.POST)
+            form = forms.MyGroupForm(request.POST, my_familio=member)
             if form.is_valid():
-                form.save()
-                return redirect('group')
+                element = form.save(commit=False)
+                if models.Group.objects.filter(grp_name=element.grp_name):  # noqa
+                    messages.warning(request, 'You have already added a group with this name.')  # noqa
+                    return redirect('group')
+                else:
+                    element.member = request.user
+                    element.save()
+                    form.save_m2m()
+                    messages.success(request, 'The group has been created.')
+                    return redirect('group')
             else:
                 messages.warning(request, 'This group can not be created.')
+        groups = models.Group.objects.filter(member=request.user)
         form = forms.MyGroupForm(my_familio=member)
         context = {
             'form': form,
+            'groups': groups,
         }
         return render(request, 'member/group.html', context)
     else:
         messages.info(
             request, 'You are using a free plan and can not access this')
         return render(request, 'member/menu.html')
+
+
+@login_required(redirect_field_name='account_login')
+def edit_group(request, group_id):
+    """ Member edit the Group """
+    group = get_object_or_404(models.Group, id=group_id)
+    member = get_object_or_404(models.CustomUser, id=request.user.id)
+    if request.method == 'POST':
+        form = forms.MyGroupForm(
+            request.POST, instance=group, my_familio=member)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'The group has been updated.')
+            return redirect('group')
+        else:
+            messages.warning(request, 'This group could not be updated.')
+    form = forms.MyGroupForm(instance=group, my_familio=member)
+    groups = models.Group.objects.filter(member=request.user)
+    context = {
+        'form': form,
+        'groups': groups,
+    }
+    return render(request, 'member/group.html', context)
+
+
+@login_required(redirect_field_name='account_login')
+def delete_group(request, group_id):
+    """  Member delete the Group """
+    group = get_object_or_404(models.Group, id=group_id)
+    group.delete()
+    return redirect('group')
 
 
 @login_required(redirect_field_name='account_login')
@@ -178,9 +220,9 @@ def familio(request):
         form = forms.MyFamilioForm(request.POST)
         if form.is_valid():
             element = form.save(commit=False)
-            if models.Familio.objects.filter(email=element.email, member=request.user):  # noqa
+            if models.Familio.objects.filter(email=element.email, member=request.user, name=element.name):  # noqa
                 messages.warning(
-                    request, 'You have already invited this email address. See in list Familio Sent.')  # noqa
+                    request, 'You have already added this member. See in the familio list.')  # noqa
                 return redirect('familio')
             else:
                 if request.user.subscription or models.Familio.objects.filter(member=request.user).count() < 10:

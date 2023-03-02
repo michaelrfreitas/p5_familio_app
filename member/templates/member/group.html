@@ -10,7 +10,7 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <div class="card bg-light text-black fam_sha">
                 <div class="card-body p-5">
-                    <h2 class="fw-bold text-uppercase mb-2">{% trans "Groups" %}</h2>
+                    <h2 class="fw-bold text-uppercase mb-2">{% trans "Add Group" %}</h2>
                     <div class="form-outline form-white mb-2">
                         <form method="post">
                             {% csrf_token %}
@@ -26,6 +26,30 @@
                 </div>
             </div>
         </div>
+        {% if groups %}
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5 fam_over">
+            <div class="card bg-white text-black fam_sha">
+                <div class="card-body">
+                    <div class="mb-md-3 mt-md-2">
+                        <h2 class="fw-bold mb-2 text-uppercase">{% trans "Groups" %}</h2>
+                        {% for group in groups %}
+                        <div class="form-outline form-white m-3 p-3 fam_sha">
+                            <p>
+                                Name: {{ group.grp_name }}<br>
+                                Familio Members: {{ group.get_familios }}<br>
+                                <a class="btn btn-outline-warning btn-md"
+                                    href="{{ activate_url }}/members/edit_group/{{ group.id }}">Edit</a> 
+                                <a class="btn btn-outline-danger btn-md"
+                                    href="{{ activate_url }}/members/delete_group/{{ group.id }}">Delete</a>
+                            </p>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 

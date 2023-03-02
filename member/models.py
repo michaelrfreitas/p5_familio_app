@@ -52,13 +52,13 @@ class Familio(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL)
     member = models.ForeignKey(User, on_delete=models.CASCADE)
     kinship = models.CharField(max_length=20, choices=KINSHIP)
-    email = models.EmailField(null=False)
+    email = models.EmailField(default="", blank=True, null=True)
     approved = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=50, default='')
 
     class Meta:
-        ordering = ['created_on']
+        ordering = ['name']
 
     def __str__(self):
         return f'{self.name} - {self.kinship}'
@@ -68,12 +68,14 @@ class Group(models.Model):
     familio = models.ManyToManyField(Familio)
     grp_name = models.CharField(max_length=50, null=False)
     created_on = models.DateTimeField(auto_now_add=True)
+    member = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['created_on']
 
     def get_familios(self):
-        return "\n".join([f.name for f in self.familio.all()])
+        names = [f.name for f in self.familio.all()]
+        return ', '.join(names)
 
     def __str__(self):
         return self.grp_name

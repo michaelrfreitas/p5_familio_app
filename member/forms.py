@@ -42,8 +42,9 @@ class MyFamilioForm(forms.ModelForm):
 
 class MyGroupForm(forms.ModelForm):
 
-    def __init__(self, my_familio, *args, **kwargs):
-        super(MyGroupForm, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        my_familio = kwargs.pop('my_familio')
+        super().__init__(*args, **kwargs)
         self.fields['familio'].queryset = models.Familio.objects.filter(
             member=my_familio)
 
