@@ -38,7 +38,7 @@ async function getData() {
     const static_url = JSON.parse(document.getElementById('static_url').textContent);
     const email = JSON.parse(document.getElementById('email').textContent);
     try {
-        let res = await fetch(static_url + 'json/' + email + '.json');
+        let res = await fetch(static_url + '/json/' + email + '.json');
         return await res.json();
     } catch (error) {
         alert("Ooops! Something's gone wrong. Please, try again.");

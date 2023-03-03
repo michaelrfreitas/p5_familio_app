@@ -18,7 +18,7 @@
 
 
 {% block extrapostjs %}
-{{ settings.STATIC_URL|json_script:"static_url" }}
+{{ settings.STATICFILES_DIRS|json_script:"static_url" }}
 {{ user.email|json_script:"email" }}
 <script src="{% static 'js/familytree.js' %}"></script>
 {% endblock %}
