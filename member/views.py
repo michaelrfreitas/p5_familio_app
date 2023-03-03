@@ -158,6 +158,8 @@ def tree(request):
     out_file.write('')
     json.dump(data, out_file)
     out_file.close()
+    print(out_file)
+    print(file)
     return render(request, 'member/tree.html')
 
 
