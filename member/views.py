@@ -153,11 +153,11 @@ def tree(request):
         path = f'{settings.STATIC_URL}/json'
     if not os.path.exists(path):
         os.mkdir(path)
-    file = f'{request.user.email}.json'
-    out_file = open(os.path.join(path, file), "w")
-    out_file.write('')
-    # json.dump(data, out_file)
-    out_file.close()
+    # file = f'{request.user.email}.json'
+    # out_file = open(os.path.join(path, file), "w")
+    # out_file.write('')
+    # # json.dump(data, out_file)
+    # out_file.close()
     return render(request, 'member/test.html')
 
 
