@@ -146,11 +146,11 @@ def tree(request):
                 'img': img,
                 'tags': [tag],
             })
-    path = f'static/json'
+    path = '/static/json'
     if not os.path.exists(path):
         os.mkdir(path)
-    # file = f'{request.user.email}.json'
-    # out_file = open(os.path.join(path, file), "w")
+    file = f'{request.user.email}.json'
+    out_file = open(os.path.join(path, file), "w")
     # out_file.write('')
     # # json.dump(data, out_file)
     # out_file.close()
