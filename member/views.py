@@ -45,119 +45,119 @@ def my_profile(request):
 
 @login_required(redirect_field_name='account_login')
 def tree(request):
-    # """ Creating a Family Tree """
-    # # Array with all invites sent to members
-    # familios = models.Familio.objects.filter(member=request.user)
-    # # Array with all invites received from members
-    # receives = models.Familio.objects.filter(email=request.user.email)
-    # # Data Array to create a JSON file with details
-    # data = []
-    # # Variables
-    # pid = ''
-    # ppid = ''
-    # tag = ''
-    # pid_main = ''
-    # ppid_main = ''
-    # tag_main = ''
-    # # Check if there is image in the main profile
-    # if request.user.photo == '':
-    #     my_img = ''
-    # else:
-    #     my_img = request.user.photo.url
-    # # Loop to collect all data in familio relationship
-    # for familio in familios:
-    #     # Check if the familio relationship is approved
-    #     if familio.approved or not familio.email:
-    #         # Collect specific members details from each familio member
-    #         if familio.email:
-    #             member = get_object_or_404(
-    #                 models.CustomUser, email=familio.email)
-    #         else:
-    #             member = familio
-    #         # If have a Father kinship
-    #         if familio.kinship == 'Father':
-    #             ppid_main = member.id
-    #         # If have a Mother kinship
-    #         elif familio.kinship == 'Mother':
-    #             pid_main = member.id
-    #             tag_main = 'childrenTemplate'
-    # # Add data regarding main profile to Data Array
-    # data.append({
-    #             'id': request.user.id,
-    #             'pid': pid_main,
-    #             'ppid': ppid_main,
-    #             'name': request.user.first_name + ' ' + request.user.last_name,
-    #             'parent': 'Myself',
-    #             'img': my_img,
-    #             'tags': [tag_main],
-    #             })
-    # # Loop to collect all data in familio relationship
-    # for familio in familios:
-    #     # Check if the familio relationship is approved
-    #     if familio.approved or not familio.email:
-    #         # Collect specific members details from each familio member
-    #         if familio.email:
-    #             member = get_object_or_404(
-    #                 models.CustomUser, email=familio.email)
-    #             # Check if there is image in the profiles
-    #             if member.photo == '':
-    #                 img = ''
-    #             else:
-    #                 img = member.photo.url
-    #         else:
-    #             member = familio
-    #             img = ''
-    #         # If have a Father kinship
-    #         if familio.kinship == 'Father':
-    #             pid = pid_main
-    #             ppid = ''
-    #             tag = 'partner'
-    #         elif familio.kinship == 'Mother':
-    #             pid = ''
-    #             ppid = ''
-    #             tag = ''
-    #         elif familio.kinship == 'Brother' or familio.kinship == 'Sister':
-    #             pid = pid_main
-    #             ppid = ppid_main
-    #             tag = tag_main
-    #         elif familio.kinship == 'Wife' or familio.kinship == 'Husband':
-    #             pid = request.user.id
-    #             tag = 'partner'
-    #             ppid = ''
-    #             ppid_p = member.id
-    #         elif familio.kinship == 'Son' or familio.kinship == 'Daughter':
-    #             pid = request.user.id
-    #             tag = 'childrenTemplate'
-    #             ppid = ppid_p
-    #         else:
-    #             tag = ''
-    #             pid = ''
-    #             ppid = ''
-    #         # Add the data compiled to the Data Array for JSON file
-    #         if familio.email:
-    #             name = member.first_name + ' ' + member.last_name
-    #         else:
-    #             name = member.name
-    #         data.append({
-    #             'id': member.id,
-    #             'pid': pid,
-    #             'ppid': ppid,
-    #             'name': name,
-    #             'parent': familio.kinship,
-    #             'img': img,
-    #             'tags': [tag],
-    #         })
-    # if os.environ.get('DEVELOPMENT'):
-    #     path = f'static/json'
-    # else:
-    #     path = f'{settings.STATIC_URL}/json'
-    # if not os.path.exists(path):
-    #     os.mkdir(path)
-    # file = f'{request.user.email}.json'
-    # out_file = open(os.path.join(path, file), "w")
-    # out_file.write('')
-    # json.dump(data, out_file)
-    # out_file.close()
+    """ Creating a Family Tree """
+    # Array with all invites sent to members
+    familios = models.Familio.objects.filter(member=request.user)
+    # Array with all invites received from members
+    receives = models.Familio.objects.filter(email=request.user.email)
+    # Data Array to create a JSON file with details
+    data = []
+    # Variables
+    pid = ''
+    ppid = ''
+    tag = ''
+    pid_main = ''
+    ppid_main = ''
+    tag_main = ''
+    # Check if there is image in the main profile
+    if request.user.photo == '':
+        my_img = ''
+    else:
+        my_img = request.user.photo.url
+    # Loop to collect all data in familio relationship
+    for familio in familios:
+        # Check if the familio relationship is approved
+        if familio.approved or not familio.email:
+            # Collect specific members details from each familio member
+            if familio.email:
+                member = get_object_or_404(
+                    models.CustomUser, email=familio.email)
+            else:
+                member = familio
+            # If have a Father kinship
+            if familio.kinship == 'Father':
+                ppid_main = member.id
+            # If have a Mother kinship
+            elif familio.kinship == 'Mother':
+                pid_main = member.id
+                tag_main = 'childrenTemplate'
+    # Add data regarding main profile to Data Array
+    data.append({
+                'id': request.user.id,
+                'pid': pid_main,
+                'ppid': ppid_main,
+                'name': request.user.first_name + ' ' + request.user.last_name,
+                'parent': 'Myself',
+                'img': my_img,
+                'tags': [tag_main],
+                })
+    # Loop to collect all data in familio relationship
+    for familio in familios:
+        # Check if the familio relationship is approved
+        if familio.approved or not familio.email:
+            # Collect specific members details from each familio member
+            if familio.email:
+                member = get_object_or_404(
+                    models.CustomUser, email=familio.email)
+                # Check if there is image in the profiles
+                if member.photo == '':
+                    img = ''
+                else:
+                    img = member.photo.url
+            else:
+                member = familio
+                img = ''
+            # If have a Father kinship
+            if familio.kinship == 'Father':
+                pid = pid_main
+                ppid = ''
+                tag = 'partner'
+            elif familio.kinship == 'Mother':
+                pid = ''
+                ppid = ''
+                tag = ''
+            elif familio.kinship == 'Brother' or familio.kinship == 'Sister':
+                pid = pid_main
+                ppid = ppid_main
+                tag = tag_main
+            elif familio.kinship == 'Wife' or familio.kinship == 'Husband':
+                pid = request.user.id
+                tag = 'partner'
+                ppid = ''
+                ppid_p = member.id
+            elif familio.kinship == 'Son' or familio.kinship == 'Daughter':
+                pid = request.user.id
+                tag = 'childrenTemplate'
+                ppid = ppid_p
+            else:
+                tag = ''
+                pid = ''
+                ppid = ''
+            # Add the data compiled to the Data Array for JSON file
+            if familio.email:
+                name = member.first_name + ' ' + member.last_name
+            else:
+                name = member.name
+            data.append({
+                'id': member.id,
+                'pid': pid,
+                'ppid': ppid,
+                'name': name,
+                'parent': familio.kinship,
+                'img': img,
+                'tags': [tag],
+            })
+    if os.environ.get('DEVELOPMENT'):
+        path = f'static/json'
+    else:
+        path = f'{settings.STATIC_URL}/json'
+    if not os.path.exists(path):
+        os.mkdir(path)
+    file = f'{request.user.email}.json'
+    out_file = open(os.path.join(path, file), "w")
+    out_file.write('')
+    json.dump(data, out_file)
+    out_file.close()
     return render(request, 'member/test.html')
 
 
