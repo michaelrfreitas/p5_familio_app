@@ -158,7 +158,7 @@ def tree(request):
     # out_file.write('')
     # json.dump(data, out_file)
     # out_file.close()
-    return render(request, 'member/tree.html')
+    return render(request, 'member/test.html')
 
 
 @login_required(redirect_field_name='account_login')
