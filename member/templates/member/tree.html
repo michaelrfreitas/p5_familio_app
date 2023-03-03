@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_js %}
-<script src="{% static 'js/orgchart.js' %}"></script>
+
 {% endblock %}
 
 {% block page_header %}
@@ -18,7 +18,8 @@
 
 
 {% block extrapostjs %}
-{{ settings.STATICFILES_DIRS|json_script:"static_url" }}
+<script src="{% static 'js/orgchart.js' %}"></script>
+{{ settings.STATIC_URL|json_script:"static_url" }}
 {{ user.email|json_script:"email" }}
 <script src="{% static 'js/familytree.js' %}"></script>
 {% endblock %}
