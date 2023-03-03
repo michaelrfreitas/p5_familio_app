@@ -16,10 +16,10 @@
 </div>
 {% endblock %}
 
-
 {% block extrapostjs %}
 <script src="{% static 'js/orgchart.js' %}"></script>
-{{ settings.STATIC_URL|json_script:"static_url" }}
-{{ user.email|json_script:"email" }}
+<script>
+    var url = "{% static '' %}json/{{user.email}}.json";
+</script>
 <script src="{% static 'js/familytree.js' %}"></script>
 {% endblock %}

@@ -150,7 +150,7 @@ def tree(request):
     if os.environ.get('DEVELOPMENT'):
         path = f'static/json'
     else:
-        path = f'{settings.STATIC_ROOT}/json'
+        path = f'{settings.STATIC_URL}/json'
     if not os.path.exists(path):
         os.mkdir(path)
     file = f'{request.user.email}.json'

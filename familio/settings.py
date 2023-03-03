@@ -17,7 +17,7 @@ if os.path.isfile("env.py"):
 
 development = os.environ.get('DEVELOPMENT', False)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES_ALLAUTH = os.path.join(BASE_DIR, 'templates', 'allauth')
 
@@ -49,15 +49,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
     'cloudinary_storage',
+    'django.contrib.staticfiles',
+    'cloudinary',
+    'django.contrib.sites',
     'django.core.mail',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'cloudinary',
     'blog',
     'home',
     'member',
@@ -115,8 +115,17 @@ LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SESSION_REMEMBER = False
 
-ACCOUNT_FORMS = {'signup': 'member.forms.MyCustomSignupForm', 'login': 'member.forms.MyCustomLoginForm'}
+ACCOUNT_FORMS = {'signup': 'member.forms.MyCustomSignupForm',
+                 'login': 'member.forms.MyCustomLoginForm'}
 AUTH_USER_MODEL = 'member.CustomUser'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'my-manifest-directory'),
+    'EXCLUDE_DELETE_ORPHANED_MEDIA_PATHS': ('path/', 'second-path/')
+}
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -138,7 +147,7 @@ if development:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 else:
@@ -183,7 +192,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

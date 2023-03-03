@@ -35,10 +35,10 @@ var chart = new OrgChart(document.getElementById("tree"), {
 });
 
 async function getData() {
-    const static_url = JSON.parse(document.getElementById('static_url').textContent);
-    const email = JSON.parse(document.getElementById('email').textContent);
+    const static_url = url;
+    console.log(static_url)
     try {
-        let res = await fetch(static_url + '/json/' + email + '.json');
+        let res = await fetch(static_url);
         return await res.json();
     } catch (error) {
         alert("Ooops! Something's gone wrong. Please, try again.");
