@@ -1,5 +1,5 @@
-import json
 import os
+import json
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -8,7 +8,6 @@ from . import forms
 from subscriber.views import stripe_cancel
 from django.contrib import messages
 from django.core.mail import send_mail
-
 
 
 @login_required(redirect_field_name='account_login')
@@ -147,10 +146,7 @@ def tree(request):
                 'img': img,
                 'tags': [tag],
             })
-    if os.environ.get('DEVELOPMENT'):
-        path = f'static/json'
-    else:
-        path = f'{settings.STATIC_URL}/json'
+    path = f'static/json'
     if not os.path.exists(path):
         os.mkdir(path)
     # file = f'{request.user.email}.json'
@@ -325,7 +321,8 @@ def edit_invite(request, familio_id):
         form = forms.MyFamilioForm(request.POST, instance=invite)
         if form.is_valid():
             form.save()
-            messages.success(request, 'You have updated successfully the member.')
+            messages.success(
+                request, 'You have updated successfully the member.')
             return redirect('familio')
         else:
             messages.warning(request, 'This member could not be updated.')
