@@ -155,9 +155,9 @@ def tree(request):
             print(error)
     file = f'{request.user.email}.json'
     out_file = open(os.path.join(path, file), "w")
-    # out_file.write('')
-    # # json.dump(data, out_file)
-    # out_file.close()
+    out_file.write('')
+    json.dump(data, out_file)
+    out_file.close()
 
     context = {
         'path': path,
