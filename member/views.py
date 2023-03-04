@@ -164,7 +164,7 @@ def tree(request):
         'out_file': out_file
     }
 
-    return render(request, 'member/test.html', context)
+    return render(request, 'member/familytree.html', context)
 
 
 @login_required(redirect_field_name='account_login')
