@@ -150,7 +150,7 @@ def tree(request):
     print(path)
     if not os.path.exists(path):
         try:
-            os.mkdir(path)
+            os.makedirs(path)
         except OSError as error:
             print(error)
     file = f'{request.user.email}.json'
