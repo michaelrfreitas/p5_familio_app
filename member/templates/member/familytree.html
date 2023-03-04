@@ -11,5 +11,7 @@
 
 {% block postloadjs %}
 <script src="{% static 'js/orgchart.js' %}"></script>
-
+<script>
+    var url = "{% static '' %}json/{{user.email}}.json";
+</script>
 {% endblock %}
