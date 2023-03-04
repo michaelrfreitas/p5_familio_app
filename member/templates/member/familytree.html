@@ -10,6 +10,9 @@
 {% endblock %}
 
 {% block postloadjs %}
+<script>
+    var url = "{{ out_file}}";
+</script>
 <script src="{% static 'js/orgchart.js' %}"></script>
 <script src="{% static 'js/familytree.js' %}"></script>
 {% endblock %}

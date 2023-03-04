@@ -161,7 +161,7 @@ def tree(request):
 
     context = {
         'path': path,
-        'out_file': out_file
+        'out_file': out_file.name
     }
 
     return render(request, 'member/familytree.html', context)
