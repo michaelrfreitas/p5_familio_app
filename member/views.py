@@ -148,11 +148,11 @@ def tree(request):
             })
     path = os.path.join(settings.STATICFILES_DIRS[0], 'json')
     print(path)
-    # if not os.path.exists(path):
-    #     try:
-    #         os.mkdir(path)
-    #     except OSError as error:
-    #         print(error)
+    if not os.path.exists(path):
+        try:
+            os.mkdir(path)
+        except OSError as error:
+            print(error)
     # file = f'{request.user.email}.json'
     # out_file = open(os.path.join(path, file), "w")
     # out_file.write('')
