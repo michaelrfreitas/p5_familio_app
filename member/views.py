@@ -153,14 +153,15 @@ def tree(request):
             os.mkdir(path)
         except OSError as error:
             print(error)
-    # file = f'{request.user.email}.json'
-    # out_file = open(os.path.join(path, file), "w")
+    file = f'{request.user.email}.json'
+    out_file = open(os.path.join(path, file), "w")
     # out_file.write('')
     # # json.dump(data, out_file)
     # out_file.close()
 
     context = {
         'path': path,
+        'out_file': out_file
     }
 
     return render(request, 'member/test.html', context)
