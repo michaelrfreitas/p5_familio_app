@@ -36,7 +36,6 @@ var chart = new OrgChart(document.getElementById("tree"), {
 
 async function getData() {
     const static_url = url;
-    console.log(static_url)
     try {
         let res = await fetch(static_url);
         return await res.json();
@@ -46,7 +45,6 @@ async function getData() {
 }
 async function exec() {
     let nodes = await getData();
-    console.log(nodes);
     chart.load(nodes);
 }
 
