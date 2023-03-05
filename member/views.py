@@ -318,12 +318,30 @@ def approved(request, familio_id):
     approve = get_object_or_404(models.Familio, id=familio_id)
     if request.user.email == approve.email:
         approve.approved = not approve.approved
+        familio = models.Familio()
+        familio.member = request.user
+        familio.email = approve.member.email
+        familio.level = approve.level
+        familio.approved = True
+        familio.name = approve.member
+        if approve.kinship == 'Wife':
+            familio.kinship = 'Husband'
+        elif approve.kinship == 'Husband':
+            familio.kinship = 'Wife'
+        elif approve.kinship == 'Father' or approve.kinship == 'Mother':
+            familio.kinship == 'Son'
+        elif approve.kinship == 'Son' or approve.kinship == 'Daughter':
+            familio.kinship == 'Father'
+        else:
+            familio.kinship = approve.kinship
         approve.save()
+        familio.save()
         messages.info(
             request, f'The status has changed to Invite member: { approve.member.first_name } { approve.member.last_name } your Kinship: { approve.kinship}!')  # noqa
         return redirect('familio')
     messages.warning(request, 'You are not allowed to approve this invite.')
     return redirect('menu')
+
 
 @login_required(redirect_field_name='account_login')
 def edit_invite(request, familio_id):
