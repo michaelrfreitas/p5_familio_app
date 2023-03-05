@@ -1,5 +1,6 @@
 import os
 import json
+import cloudinary
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -146,22 +147,16 @@ def tree(request):
                 'img': img,
                 'tags': [tag],
             })
-    path = os.path.join(settings.STATICFILES_DIRS[0], 'json')
-    print(path)
-    if not os.path.exists(path):
-        try:
-            os.makedirs(path)
-        except OSError as error:
-            print(error)
+    path = 'static/json/'
     file = f'{request.user.email}.json'
     out_file = open(os.path.join(path, file), "w")
     out_file.write('')
     json.dump(data, out_file)
     out_file.close()
-
+    result = cloudinary.uploader.upload(
+        out_file.name, resource_type="auto", public_id=file, folder=path, use_filename=True, unique_filename=False)
     context = {
-        'path': path,
-        'out_file': out_file.name
+        'path': result.get('secure_url'),
     }
 
     return render(request, 'member/familytree.html', context)
