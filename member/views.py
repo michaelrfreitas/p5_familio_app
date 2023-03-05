@@ -1,6 +1,7 @@
 import os
 import json
 import cloudinary
+import tempfile
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -59,6 +60,7 @@ def tree(request):
     pid_main = ''
     ppid_main = ''
     tag_main = ''
+    ppid_p = ''
     # Check if there is image in the main profile
     if request.user.photo == '':
         my_img = ''
@@ -147,14 +149,17 @@ def tree(request):
                 'img': img,
                 'tags': [tag],
             })
+
     path = 'static/json/'
     file = f'{request.user.email}.json'
-    out_file = open(os.path.join(path, file), "w")
-    out_file.write('')
-    json.dump(data, out_file)
-    out_file.close()
-    result = cloudinary.uploader.upload(
-        out_file.name, resource_type="auto", public_id=file, folder=path, use_filename=True, unique_filename=False)
+
+    with tempfile.NamedTemporaryFile(delete=False, mode='w+', suffix='.json') as temp:
+        temp.write('')
+        json.dump(data, temp, indent=6)
+        temp.flush()
+        result = cloudinary.uploader.upload(
+            temp.name, resource_type="auto", public_id=file, folder=path, use_filename=True, unique_filename=False)
+
     context = {
         'path': result.get('secure_url'),
     }
