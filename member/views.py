@@ -60,7 +60,6 @@ def tree(request):
     pid_main = ''
     ppid_main = ''
     tag_main = ''
-    ppid_p = ''
     # Check if there is image in the main profile
     if request.user.photo == '':
         my_img = ''
@@ -96,6 +95,7 @@ def tree(request):
     # Loop to collect all data in familio relationship
     for familio in familios:
         # Check if the familio relationship is approved
+        ppid_p = ''
         if familio.approved or not familio.email:
             # Collect specific members details from each familio member
             if familio.email:
