@@ -316,12 +316,14 @@ def familio(request):
 def approved(request, familio_id):
     """ Member approves and desapproves to Familio member. """
     approve = get_object_or_404(models.Familio, id=familio_id)
-    approve.approved = not approve.approved
-    approve.save()
-    messages.info(
-        request, f'The status has changed to Invite member: { approve.member.first_name } { approve.member.last_name } your Kinship: { approve.kinship}!')  # noqa
-    return redirect('familio')
-
+    if request.user.email == approve.email:
+        approve.approved = not approve.approved
+        approve.save()
+        messages.info(
+            request, f'The status has changed to Invite member: { approve.member.first_name } { approve.member.last_name } your Kinship: { approve.kinship}!')  # noqa
+        return redirect('familio')
+    messages.warning(request, 'You are not allowed to approve this invite.')
+    return redirect('menu')
 
 @login_required(redirect_field_name='account_login')
 def edit_invite(request, familio_id):
