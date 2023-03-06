@@ -9,8 +9,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-      content="Familio is a tool to create your family tree and interact with your family members easily in a blog channel. Sharing things with your family to become close to your blood. There are 3 levels of family members and you can start to create your tree and see how it can be great for your life. Doesn't matter where you are but all family can stay together. It's not social media, it's blood media that can keep the family close than ever.">
-  <meta name="keywords" content="family, family, blood media, family-tree, tree, family members">
+    content="Familio is a tool to create your family tree and interact with your family members easily in a blog channel. Sharing things with your family to become close to your blood. There are 3 levels of family members and you can start to create your tree and see how it can be great for your life. Doesn't matter where you are but all family can stay together. It's not social media, it's blood media that can keep the family close than ever.">
+  <meta name="keywords"
+    content="family, family, blood media, family-tree, tree, family members, familio, familio-uk, familio uk, family uk, family member uk, family member, familio member, social media, social family, network family, familio tree, family tree">
   <meta name="author" content="Michael Freitas">
   {% endblock %}
 
@@ -24,14 +25,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  <link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.ico' %}"/>
+  <link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.ico' %}" />
   {% endblock %}
 
   {% block extra_css %}
   {% endblock %}
 
   {% block corejs %}
-  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
   </script>
@@ -48,57 +50,59 @@
   <header class="container-fluid fixed-top">
     <div class="row bg-white pt-lg-1 d-flex flex-nowrap">
       <nav class="navbar navbar-expand-lg navbar-light nav-width">
-        <a class="navbar-brand logo-font" href="{% url 'home' %}"><h2><strong>Familio</strong></h2></a>
+        <a class="navbar-brand logo-font" href="{% url 'home' %}">
+          <h2><strong>Familio</strong></h2>
+        </a>
         {% if not request.user.is_authenticated %}
-          {% include 'includes/main_nav.html' %}
+        {% include 'includes/main_nav.html' %}
         {% else %}
-          {% include 'includes/nav_menu.html' %}
+        {% include 'includes/nav_menu.html' %}
         {% endif %}
       </nav>
-        <ul class="list-inline list-unstyled align-items-right my-1">
-            {% if request.user.is_authenticated %}
-                <li class="list-inline-item dropdown">
-                    <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <div class="text-center">
-                        <div>
-                          {% if user.photo %}
-                          <img id="photo_sm" src="{{ user.photo.url }}" alt="">
-                          {% else %}
-                          <i class="fas fa-user fa-lg"></i>
-                          {% endif %}
-                        </div>
-                        <p class="small my-1">{{ user.get_full_name }}</p>
-                    </div>
-                    </a>
-                    <div class="dropdown-menu border-1" aria-labelledby="user-options">
-                        <a href="{% url 'my_profile' %}" class="dropdown-item">My Profile</a>
-                        <a href="{% url 'account_change_password' %}" class="dropdown-item">Change Password</a>
-                        <a href="{% url 'account_email' %}" class="dropdown-item">Change Email</a>
-                        <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
-                    </div>
-                </li>
-            {% endif %}
-        </ul>
+      <ul class="list-inline list-unstyled align-items-right my-1">
+        {% if request.user.is_authenticated %}
+        <li class="list-inline-item dropdown">
+          <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <div class="text-center">
+              <div>
+                {% if user.photo %}
+                <img id="photo_sm" src="{{ user.photo.url }}" alt="">
+                {% else %}
+                <i class="fas fa-user fa-lg"></i>
+                {% endif %}
+              </div>
+              <p class="small my-1">{{ user.get_full_name }}</p>
+            </div>
+          </a>
+          <div class="dropdown-menu border-1" aria-labelledby="user-options">
+            <a href="{% url 'my_profile' %}" class="dropdown-item">My Profile</a>
+            <a href="{% url 'account_change_password' %}" class="dropdown-item">Change Password</a>
+            <a href="{% url 'account_email' %}" class="dropdown-item">Change Email</a>
+            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+          </div>
+        </li>
+        {% endif %}
+      </ul>
     </div>
   </header>
 
   {% if messages %}
-    <div class="message-container">
-        {% for message in messages %}
-            {% with message.level as level %}
-                {% if level == 40 %}
-                    {% include 'includes/toasts/toast_error.html' %}
-                {% elif level == 30 %}
-                    {% include 'includes/toasts/toast_warning.html' %}
-                {% elif level == 25 %}
-                    {% include 'includes/toasts/toast_success.html' %}
-                {% else %}
-                    {% include 'includes/toasts/toast_info.html' %}
-                {% endif %}
-            {% endwith %}
-        {% endfor %}
-    </div>
+  <div class="message-container">
+    {% for message in messages %}
+    {% with message.level as level %}
+    {% if level == 40 %}
+    {% include 'includes/toasts/toast_error.html' %}
+    {% elif level == 30 %}
+    {% include 'includes/toasts/toast_warning.html' %}
+    {% elif level == 25 %}
+    {% include 'includes/toasts/toast_success.html' %}
+    {% else %}
+    {% include 'includes/toasts/toast_info.html' %}
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
+  </div>
   {% endif %}
 
   {% block page_header %}
@@ -107,22 +111,26 @@
   {% block content %}
   {% endblock %}
 
- <!-- Footer -->
- <footer id="footer">
-      <a class="text-white" href="https://www.facebook.com/profile.php?id=100089476296753" target="_blank" rel="noopener noreferrer"><i class="footer_i fab fa-facebook-square ms-2"></i></a>
-      <a class="text-white" href="https://www.linkedin.com/company/familio-uk/" target="_blank" rel="noopener noreferrer"><i class="footer_i fab fa-linkedin ms-2"></i></a>
-      <a class="text-white" href="https://instagram.com/familio.uk?igshid=YmMyMTA2M2Y=" target="_blank" rel="noopener noreferrer"><i class="footer_i fab fa-instagram-square ms-2"></i></a>
-      <a class="text-white" href="https://www.youtube.com/@familiouk/" target="_blank" rel="noopener noreferrer"><i class="footer_i fab fa-youtube-square ms-2"></i></a>
-  <br>
-  <p class="m-1 text-center text-white">Familio <i class="fa fa-copyright"></i> Copyright 2022 </p>
-</footer>
+  <!-- Footer -->
+  <footer id="footer">
+    <a class="text-white" href="https://www.facebook.com/profile.php?id=100089476296753" target="_blank"
+      rel="noopener noreferrer"><i class="footer_i fab fa-facebook-square ms-2"></i></a>
+    <a class="text-white" href="https://www.linkedin.com/company/familio-uk/" target="_blank"
+      rel="noopener noreferrer"><i class="footer_i fab fa-linkedin ms-2"></i></a>
+    <a class="text-white" href="https://instagram.com/familio.uk?igshid=YmMyMTA2M2Y=" target="_blank"
+      rel="noopener noreferrer"><i class="footer_i fab fa-instagram-square ms-2"></i></a>
+    <a class="text-white" href="https://www.youtube.com/@familiouk/" target="_blank" rel="noopener noreferrer"><i
+        class="footer_i fab fa-youtube-square ms-2"></i></a>
+    <br>
+    <p class="m-1 text-center text-white">Familio <i class="fa fa-copyright"></i> Copyright 2022 </p>
+  </footer>
 
   {% block postloadjs %}
   <script type="text/javascript">
-      $('.toast').toast('show');
+    $('.toast').toast('show');
   </script>
   {% endblock %}
-  
+
 </body>
 
 </html>
