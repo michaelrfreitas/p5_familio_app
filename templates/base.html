@@ -51,7 +51,7 @@
     <div class="row bg-white pt-lg-1 d-flex flex-nowrap">
       <nav class="navbar navbar-expand-lg navbar-light nav-width">
         <a class="navbar-brand logo-font" href="{% url 'home' %}">
-          <h2><strong>Familio</strong></h2>
+          <h1><strong>Familio</strong></h1>
         </a>
         {% if not request.user.is_authenticated %}
         {% include 'includes/main_nav.html' %}
@@ -67,7 +67,7 @@
             <div class="text-center">
               <div>
                 {% if user.photo %}
-                <img id="photo_sm" src="{{ user.photo.url }}" alt="">
+                <img id="photo_sm" src="{{ user.photo.url }}" alt="Familio Profile Picture">
                 {% else %}
                 <i class="fas fa-user fa-lg"></i>
                 {% endif %}
