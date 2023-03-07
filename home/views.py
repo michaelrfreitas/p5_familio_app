@@ -22,4 +22,4 @@ def robots(request):
     f = open('robots.txt', 'r')
     file_content = f.read()
     f.close()
-    return HttpResponse(file_content, content_type="text/plain")
+    return HttpResponse(file_content, content_type="text/plain; charset=UTF-8")
