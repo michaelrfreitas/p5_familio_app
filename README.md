@@ -10,7 +10,7 @@ There are 3 levels of the family to interact. Start to create your tree and see 
 Welcome to Familio!
 
 
-[Click here to access the tool](https://familio-app.herokuapp.com//)
+[Click here to access the tool](https://familio.uk/)
 
 ## User Experience (UX)
 ---
