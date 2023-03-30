@@ -157,38 +157,35 @@ Welcome to Familio!
 #### Contact Page
 <img alt="Contact Page" src="./static/media/wireframe/Contact.png" width="50%">
 
-#### Donate Page
-<img alt="Donate Page" src="./static/images/wireframe/Donate.png" width="50%">
-
-#### Support Page
-<img alt="Support Page" src="./static/images/wireframe/Support.png" width="50%">
-
-#### Sign In Page
-<img alt="Sign In Page" src="./static/images/wireframe/Sign In.png" width="50%">
+#### Sign On Page
+<img alt="Sign On Page" src="./static/media/wireframe/Sign on.png" width="50%">
 
 #### Sign Up Page
-<img alt="Sign Up Page" src="./static/images/wireframe/Sign Up.png" width="50%">
+<img alt="Sign Up Page" src="./static/media/wireframe/Sign up.png" width="50%">
 
-#### User Portal
-<img alt="User Portal Page" src="./static/images/wireframe/User Portal.png" width="50%">
+#### Menu Page
+<img alt="Menu Page" src="./static/media/wireframe/Menu.png" width="50%">
 
-#### Contributor Portal
-<img alt="Contributor Portal Page" src="./static/images/wireframe/Contributor Portal.png" width="50%">
+#### Tree Page
+<img alt="Tree Page" src="./static/media/wireframe/Tree.png" width="50%">
 
-#### Administrator Portal
-<img alt="Administrator Portal Page" src="./static/images/wireframe/Administrator Portal.png" width="50%">
+#### Blog Page
+<img alt="Blog Page" src="./static/media/wireframe/Blog.png" width="50%">
 
-#### Send Question Page
-<img alt="Send Question Page" src="./static/images/wireframe/Send your question.png" width="50%">
+#### Groups Page
+<img alt="Group Page" src="./static/media/wireframe/Groups.png" width="50%">
 
-#### Send Answer Page
-<img alt="Send Answer Page" src="./static/images/wireframe/Provide an answer.png" width="50%">
+#### Pictures Page
+<img alt="Pictures Page" src="./static/media/wireframe/Pictures.png" width="50%">
 
-#### Search Question Page
-<img alt="Search Question Page" src="./static/images/wireframe/Search a subject.png" width="50%">
+#### Members Page
+<img alt="Members Page" src="./static/media/wireframe/Members.png" width="50%">
 
-#### User list Page
-<img alt="User list Page" src="./static/images/wireframe/Remove Contributor.png" width="50%">
+#### Members Invite Page
+<img alt="Members Invite Page" src="./static/media/wireframe/Members Invite.png" width="50%">
+
+#### Subscription Page
+<img alt="Subscription Page" src="./static/media/wireframe/Subscription.png" width="50%">
 
 ### Database
 
