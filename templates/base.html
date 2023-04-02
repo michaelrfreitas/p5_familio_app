@@ -38,6 +38,7 @@
     integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
   </script>
   <script src="https://kit.fontawesome.com/6f007dedf1.js" crossorigin="anonymous"></script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   {% endblock %}
 
   {% block extra_js %}
@@ -53,12 +54,14 @@
         <a class="navbar-brand logo-font" href="{% url 'home' %}">
           <h1><strong>Familio</strong></h1>
         </a>
+        <div id="google_translate_element"></div>
         {% if not request.user.is_authenticated %}
         {% include 'includes/main_nav.html' %}
         {% else %}
         {% include 'includes/nav_menu.html' %}
         {% endif %}
       </nav>
+
       <ul class="list-inline list-unstyled align-items-right my-1">
         {% if request.user.is_authenticated %}
         <li class="list-inline-item dropdown">
@@ -128,6 +131,14 @@
   {% block postloadjs %}
   <script type="text/javascript">
     $('.toast').toast('show');
+  </script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
   </script>
   {% endblock %}
 
