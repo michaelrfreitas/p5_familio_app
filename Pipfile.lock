@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "247a2f9b085235ffb0a658fffb5f2231fb7d9593b26c79bf91215084d4526721"
+            "sha256": "d9787e8fdaafe186abef06a298873bd8d275b6b44922218d5530efcffd100e28"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -316,6 +316,14 @@
             "index": "pypi",
             "version": "==1.2.1"
         },
+        "django-upgrade": {
+            "hashes": [
+                "sha256:4054a225e12a768347790cfbeb9ea141c71fe5c74b29a8ccd5ea3fd97c8fa705",
+                "sha256:a313563ca690cee81f13a3f8ea7718dad0a4dc09012af25de0fd1056296ed369"
+            ],
+            "index": "pypi",
+            "version": "==1.13.0"
+        },
         "gunicorn": {
             "hashes": [
                 "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e",
@@ -581,6 +589,14 @@
             ],
             "index": "pypi",
             "version": "==5.2.0"
+        },
+        "tokenize-rt": {
+            "hashes": [
+                "sha256:3160bc0c3e8491312d0485171dea861fc160a240f5f5766b72a1165408d10740",
+                "sha256:c67772c662c6b3dc65edf66808577968fb10badfc2042e3027196bed4daf9e5a"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==5.0.0"
         },
         "urllib3": {
             "hashes": [
